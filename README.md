@@ -1,6 +1,6 @@
 # exlings
 
-![build and test](https://github.com/zoedsoupe/exlings/actions/workflows/test.yml)
+[![build and test](https://github.com/zoedsoupe/exlings/actions/workflows/test.yml/badge.svg)](https://github.com/zoedsoupe/exlings/actions/workflows/test.yml)
 
 > rustlings but for elixir this time
 
