@@ -1,0 +1,30 @@
+name: lint
+
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Run tests
+    strategy:
+      matrix:
+        otp: ['25.1.2.1']
+        elixir: ['1.14']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
+      - run: mix deps.get
+      - run: mix format --check-formatted
+      - run: mix credo --strict
