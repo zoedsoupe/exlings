@@ -26,9 +26,11 @@ defmodule Exlings.MixProject do
         burrito: [
           targets: [
             macos: [os: :darwin, cpu: :x86_64],
+            macos_m1: [os: :darwin, cpu: :aarch64],
             linux: [os: :linux, cpu: :x86_64],
             windows: [os: :windows, cpu: :x86_64]
-          ]
+          ],
+          debug: Mix.env() != :prod
         ]
       ]
     ]
@@ -36,6 +38,8 @@ defmodule Exlings.MixProject do
 
   defp deps do
     [
+      {:owl, "~> 0.6"},
+      {:file_system, "~> 0.2 or ~> 0.3"},
       {:burrito, github: "burrito-elixir/burrito"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]

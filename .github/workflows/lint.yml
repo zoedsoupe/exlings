@@ -1,12 +1,6 @@
 name: lint
 
-on:
-  push:
-    tags:
-      - v*
-    branches:
-      - main
-  pull_request:
+on: [push, pull_request]
 
 permissions:
   contents: read
