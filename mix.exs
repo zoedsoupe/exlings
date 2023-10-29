@@ -39,6 +39,7 @@ defmodule Exlings.MixProject do
   defp deps do
     [
       {:owl, "~> 0.6"},
+      {:nexus_cli, "~> 0.4.2"},
       {:file_system, "~> 0.2 or ~> 0.3"},
       {:burrito, github: "burrito-elixir/burrito"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false}

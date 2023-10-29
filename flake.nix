@@ -17,12 +17,17 @@
     devShells."${system}".default = with pkgs;
       mkShell {
         name = "exlings";
-        packages = [
-          zig
-          xz
-          _7zz
-          erl.elixir
-        ];
+        packages =
+          [
+            zig
+            xz
+            _7zz
+            erl.elixir
+          ]
+          ++ lib.optional stdenv.isDarwin [
+            darwin.apple_sdk.frameworks.CoreServices
+            darwin.apple_sdk.frameworks.CoreFoundation
+          ];
       };
 
     packages."${system}" = rec {
