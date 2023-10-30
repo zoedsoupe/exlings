@@ -27,3 +27,6 @@ exlings-*.tar
 
 # Nix files
 result
+
+# Burrito artifacts
+/burrito_out/
