@@ -5,34 +5,33 @@ defmodule Exlings.CLI do
 
   use Nexus
 
+  alias Exlings.Exercises
+
   @impl true
   def version, do: "0.1.0"
 
   Nexus.help()
 
-  defcommand(:list, required: true, doc: "List all exercices while checking your progress")
-  defcommand(:verify, required: true, doc: "Compile and run all the exercises")
-  defcommand(:hint, type: :string, required: true, doc: "Give a hint to a given exercise")
-
-  defcommand :run, type: :null, doc: "" do
-    defcommand(:next, type: :string, required: true, doc: "")
-  end
+  @run_help "Try to run a specified exercise, if not given, the pending one is run"
+  defcommand(:run, type: :string, default: "next", doc: @run_help)
 
   @impl true
-  def handle_input(:list) do
-    raise "UNIMPLEMENTED"
+  def handle_input(:run, %{value: "next"}) do
+    if e = Exercises.next_pending() do
+      {_, out} = Exercises.run(e)
+      IO.puts(out)
+    else
+      IO.puts("There's no pending exercise")
+    end
   end
 
-  def handle_input(:verify) do
-    raise "UNIMPLEMENTED"
-  end
-
-  def handle_input(:hint, %{value: _}) do
-    raise "UNIMPLEMENTED"
-  end
-
-  def handle_input(:run, %{value: _, subcommand: :next}) do
-    raise "UNIMPLEMENTED"
+  def handle_input(:run, %{value: exercise}) do
+    if e = Exercises.find_by(name: exercise) do
+      {_, out} = Exercises.run(e)
+      IO.puts(out)
+    else
+      IO.puts("Exercise #{exercise} not found!")
+    end
   end
 
   Nexus.parse()
