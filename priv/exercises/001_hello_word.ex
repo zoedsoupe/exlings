@@ -4,3 +4,5 @@ defmodule Greetings do
     IO.puts()
   end
 end
+
+Greetings.say_hello()
