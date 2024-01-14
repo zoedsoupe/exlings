@@ -1,7 +1,16 @@
-defmodule Exlings.CLI.Color do
+defmodule Exlings.CLI.UI do
   @moduledoc "false"
 
   import IO.ANSI
+
+  @spec table(list(term), (term -> term)) :: binary
+  def table(data, mapper) do
+    data
+    |> Enum.map(mapper)
+    |> Owl.Table.new()
+    |> to_string()
+    |> write()
+  end
 
   @spec write(:white | :red | :cyan | :green | :yellow, binary) :: :ok
   def write(color \\ :white, text) do
@@ -26,6 +35,10 @@ defmodule Exlings.CLI.Color do
   end
 
   def yellow(text) do
-    green() <> text <> reset() <> "\n"
+    yellow() <> text <> reset() <> "\n"
+  end
+
+  def code(text) do
+    white_background() <> text <> default_background()
   end
 end

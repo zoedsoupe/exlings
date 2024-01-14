@@ -1,19 +1,18 @@
 defmodule Exlings.Exercises do
   @moduledoc false
 
+  alias Exlings.CLI.UI
   alias Exlings.Exercises.Exercise
 
   @spec list :: list(Exercise.t())
   def list do
-    priv = List.to_string(:code.priv_dir(:exlings))
-
     [
       %Exercise{
         name: "001_hello_world",
-        path: Path.join(priv, "exercises/001_hello_world.ex"),
+        path: "priv/exercises/001_hello_world.ex",
         mode: :compile,
         hint: """
-        Function `IO.puts/1` needs a required argument!
+        Function #{UI.code("IO.puts/1")} needs a required argument!
         """
       }
     ]

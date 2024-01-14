@@ -5,7 +5,7 @@ defmodule Exlings.CLI do
 
   use Nexus
 
-  alias Exlings.CLI.Color
+  alias Exlings.CLI.UI
   alias Exlings.Exercises
   alias Exlings.Exercises.Exercise
 
@@ -14,15 +14,36 @@ defmodule Exlings.CLI do
 
   Nexus.help()
 
+  defcommand :list, type: :null, doc: "Print all available exercises."
+
+  @hint_help "Shows a hint for the specified exercise!"
+  defcommand :hint, type: :string, required: true, doc: @hint_help
+
   @run_help "Try to run a specified exercise, if not given, the pending one is run"
-  defcommand(:run, type: :string, default: "next", doc: @run_help)
+  defcommand :run, type: :string, default: "next", doc: @run_help
 
   @impl true
+  def handle_input(:list) do
+    UI.table(Exercises.list(), fn e ->
+      state = inspect(Exercise.get_state(e))
+      %{"name" => e.name, "path" => e.path, "state" => state}
+    end)
+  end
+
+  @impl true
+  def handle_input(:hint, %{value: exercise}) do
+    if e = Exercises.find_by(name: exercise) do
+      UI.write(:yellow, e.hint)
+    else
+      UI.write("Exercise #{exercise} not found!")
+    end
+  end
+
   def handle_input(:run, %{value: "next"}) do
     if e = Exercises.next_pending() do
       handle_exercise_result(e)
     else
-      Color.write("There's no pending exercise")
+      UI.write("There's no pending exercise")
     end
   end
 
@@ -30,7 +51,7 @@ defmodule Exlings.CLI do
     if e = Exercises.find_by(name: exercise) do
       handle_exercise_result(e)
     else
-      IO.puts("Exercise #{exercise} not found!")
+      UI.write("Exercise #{exercise} not found!")
     end
   end
 
@@ -42,17 +63,17 @@ defmodule Exlings.CLI do
   end
 
   defp error(%Exercise{} = e, out) do
-    Color.write(:cyan, "Failed to compile the exercise #{e.name}")
-    Color.write("Check the output below:")
-    Color.write(:red, out)
-    Color.write(:yellow, "If you feel stuck, as a hint by executing exlings hint #{e.name}")
+    UI.write(:cyan, "Failed to compile the exercise #{e.name}")
+    UI.write("Check the output below:")
+    UI.write(:red, out)
+    UI.write(:yellow, "If you feel stuck, as a hint by executing exlings hint #{e.name}")
   end
 
   defp success(%Exercise{} = e, out) do
-    Color.write(:green, "✅ Successfully tested #{e.path}!")
-    Color.write(:green, "Congratulations 🎉!!")
-    Color.write(:green, "Here's the output of your program:")
-    Color.write(:cyan, out)
+    UI.write(:green, "✅ Successfully tested #{e.path}!")
+    UI.write(:green, "Congratulations 🎉!!")
+    UI.write(:green, "Here's the output of your program:")
+    UI.write(:cyan, out)
   end
 
   Nexus.parse()
