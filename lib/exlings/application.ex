@@ -6,12 +6,13 @@ defmodule Exlings.Application do
 
   use Application
 
-  alias Burrito.Util.Args
+  # alias Burrito.Util.Args
 
   @impl true
   def start(_, _) do
-    args = Args.get_arguments()
-    Exlings.CLI.parse(args)
+    args = System.argv()
+    # args = Args.get_arguments()
+    Exlings.CLI.run(args)
     System.halt(0)
   end
 end

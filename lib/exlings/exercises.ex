@@ -9,7 +9,7 @@ defmodule Exlings.Exercises do
 
     [
       %Exercise{
-        name: "001_hello_world.ex",
+        name: "001_hello_world",
         path: Path.join(priv, "exercises/001_hello_world.ex"),
         mode: :compile,
         hint: """
