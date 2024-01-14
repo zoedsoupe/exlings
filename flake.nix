@@ -10,15 +10,12 @@
     pkgs = import nixpkgs {
       inherit system;
     };
-
-    inherit (pkgs.beam) packagesWith interpreters;
-    erl = packagesWith interpreters.erlangR26;
   in {
     devShells."${system}".default = with pkgs;
       mkShell {
         name = "exlings";
         packages =
-          [zig xz _7zz erl.elixir]
+          [zig xz _7zz elixir_1_16]
           ++ lib.optional stdenv.isDarwin [
             darwin.apple_sdk.frameworks.CoreServices
             darwin.apple_sdk.frameworks.CoreFoundation
