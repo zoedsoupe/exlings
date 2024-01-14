@@ -14,9 +14,11 @@ defmodule Exlings.CLI do
 
   Nexus.help()
 
-  defcommand :list, type: :null, doc: "Print all available exercises."
+  defcommand :list, type: :null, doc: "Print all available exercises"
 
-  @hint_help "Shows a hint for the specified exercise!"
+  defcommand :verify, type: :null, doc: "Verifies all available exefcises"
+
+  @hint_help "Shows a hint for the specified exercise"
   defcommand :hint, type: :string, required: true, doc: @hint_help
 
   @run_help "Try to run a specified exercise, if not given, the pending one is run"
@@ -28,6 +30,22 @@ defmodule Exlings.CLI do
       state = inspect(Exercise.get_state(e))
       %{"name" => e.name, "path" => e.path, "state" => state}
     end)
+  end
+
+  def handle_input(:verify) do
+    Enum.each(Exercises.list(), fn e ->
+      case Exercises.run(e) do
+        {:stdout, out} ->
+          success(e, out)
+
+        {:stderr, out} ->
+          error(e, out)
+          System.halt(1)
+      end
+    end)
+
+    UI.write(:green, "Congratulations!!!")
+    UI.write(:green, "You passed all the exercises")
   end
 
   @impl true
