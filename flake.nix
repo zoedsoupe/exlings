@@ -18,12 +18,7 @@
       mkShell {
         name = "exlings";
         packages =
-          [
-            zig
-            xz
-            _7zz
-            erl.elixir
-          ]
+          [zig xz _7zz erl.elixir]
           ++ lib.optional stdenv.isDarwin [
             darwin.apple_sdk.frameworks.CoreServices
             darwin.apple_sdk.frameworks.CoreFoundation
