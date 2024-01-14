@@ -15,8 +15,8 @@ defmodule Exlings.CLI do
   Nexus.help()
 
   defcommand :list, type: :null, doc: "Print all available exercises"
-
   defcommand :verify, type: :null, doc: "Verifies all available exefcises"
+  defcommand :watch, type: :null, doc: "Waits for a change int oany exercise"
 
   @hint_help "Shows a hint for the specified exercise"
   defcommand :hint, type: :string, required: true, doc: @hint_help
@@ -48,6 +48,11 @@ defmodule Exlings.CLI do
     UI.write(:green, "You passed all the exercises")
   end
 
+  def handle_input(:watch) do
+    {:ok, _} = Exlings.FileWatcher.start_link(callback: &run_watched_exercise/1)
+    wait()
+  end
+
   @impl true
   def handle_input(:hint, %{value: exercise}) do
     if e = Exercises.find_by(name: exercise) do
@@ -70,6 +75,32 @@ defmodule Exlings.CLI do
       handle_exercise_result(e)
     else
       UI.write("Exercise #{exercise} not found!")
+    end
+  end
+
+  @spec run_watched_exercise(Path.t()) :: :ok
+  defp run_watched_exercise(path) do
+    if e = Exercises.find_by(path: path) do
+      handle_exercise_result(e)
+    else
+      UI.write("Exercise with path #{path} not found!")
+    end
+  end
+
+  defp wait do
+    i = IO.read(:line)
+
+    cond do
+      String.match?(i, ~r"quit") ->
+        UI.write(:green, "Bye by exlings o/")
+        System.halt(0)
+
+      String.match?(i, ~r"exit") ->
+        UI.write(:green, "Bye by exlings o/")
+        System.halt(0)
+
+      true ->
+        wait()
     end
   end
 

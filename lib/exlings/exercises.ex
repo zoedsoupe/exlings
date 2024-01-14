@@ -23,9 +23,13 @@ defmodule Exlings.Exercises do
     Enum.find(list(), &(Exercise.get_state(&1) == :pending))
   end
 
-  @spec find_by(name: String.t()) :: Exercise.t() | nil
+  @spec find_by([name: String.t()] | [path: Path.t()]) :: Exercise.t() | nil
   def find_by(name: name) do
     Enum.find(list(), &(&1.name == name))
+  end
+
+  def find_by(path: path) do
+    Enum.find(list(), &(&1.path =~ path))
   end
 
   @spec run(Exercise.t()) :: {:stdout, binary} | {:stderr, binary} | {:error, binary}
