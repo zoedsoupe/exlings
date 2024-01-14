@@ -20,6 +20,7 @@ gh repo clone zoedsoupe/exlings
 ### Dependencies
 
 | name | version |
+| ---- | ------ |
 | elixir | `>= v0.14 |
 
 
