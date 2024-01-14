@@ -21,7 +21,7 @@ gh repo clone zoedsoupe/exlings
 
 | name | version |
 | ---- | ------ |
-| elixir | `>= v0.14 |
+| elixir | `>= v0.14` |
 
 
 ## Doing exercices
