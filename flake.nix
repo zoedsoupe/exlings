@@ -1,77 +1,106 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  description = "Exlings, like rustlings but for Elixir";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05-small";
+    elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
+  };
 
   outputs = {
     self,
     nixpkgs,
+    elixir-overlay,
   }: let
-    system = "aarch64-darwin";
+    inherit (nixpkgs.lib) genAttrs;
+    inherit (nixpkgs.lib.systems) flakeExposed;
 
-    pkgs = import nixpkgs {
-      inherit system;
-    };
+    forAllSystems = f:
+      genAttrs flakeExposed (
+        system: let
+          overlays = [elixir-overlay.overlays.default];
+          pkgs = import nixpkgs {inherit system overlays;};
+        in
+          f pkgs
+      );
   in {
-    devShells."${system}".default = with pkgs;
-      mkShell {
-        name = "exlings";
-        packages =
-          [zig xz _7zz elixir_1_16]
-          ++ lib.optional stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.CoreServices
-            darwin.apple_sdk.frameworks.CoreFoundation
-          ];
+    devShells = forAllSystems (pkgs: {
+      default = pkgs.mkShell {
+        name = "exlings-dev";
+        packages = with pkgs; [
+          (elixir-with-otp erlang_28)."1.18.4"
+          erlang_28
+          just
+          zig
+          _7zz
+          xz
+        ];
       };
+    });
 
-    packages."${system}" = rec {
-      default = exlings;
-
-      docker = let
-        inherit (builtins) filterSource elem;
-        file_names = ["mix.exs" "mix.lock" "lib"];
-        files = filterSource (p: _: elem (baseNameOf p) file_names) ./.;
-        paths = with pkgs; [stdenv git xz gnupg zig elixir_1_14 files];
-      in
-        with pkgs;
-          dockerTools.buildImage {
-            name = "exlings";
-            tag = "latest";
-            copyToRoot = buildEnv {
-              inherit paths;
-              name = "exlings-root";
-            };
-            config = {
-              Entrypoint = ["sh"];
-              Env = ["MIX_ENV=prod"];
-            };
-            runAsRoot = ''
-              mix do local.hex --force, local.rebar --force
-              mix do deps.get --only $MIX_ENV, deps.compile
-              mix do compile, release
-            '';
-          };
-
-      exlings = let
-        inherit (pkgs) beam;
-        inherit (beam.interpreters) erlangR26;
-
-        beamPackages = beam.packagesWith erlangR26;
-        pname = "exlings";
-        version = "0.1.0";
+    packages = forAllSystems (pkgs: {
+      default = pkgs.stdenv.mkDerivation {
+        pname = "exlings-mcp";
+        version = "0.1.0"; # x-release-please-version
         src = ./.;
-      in
-        beamPackages.mixRelease {
-          inherit src pname version;
 
-          elixir = pkgs.elixir_1_15;
-          nativeBuildInputs = with pkgs; [zig xz _7zz];
-          postBuild = "mix deps.loadpaths --no-deps-check";
-          mixFodDeps = beamPackages.fetchMixDeps {
-            inherit src version;
+        buildInputs = with pkgs; [
+          (elixir-with-otp erlang_28)."1.18.4"
+          erlang_28
+          zig
+          _7zz
+          xz
+        ];
 
-            pname = "mix-deps-${pname}";
-            sha256 = "hefyKmjYmf8s1JmzS2YM/WlXzC+FkfCEGRjh1a43OGo=";
-          };
+        buildPhase = ''
+          export MIX_ENV=prod
+          export HOME=$TMPDIR
+
+          mix do deps.get, compile
+          mix release exlings --overwrite
+        '';
+
+        installPhase = ''
+          mkdir -p $out/bin
+
+          echo "=== Build output structure ==="
+          find _build -type f -name "*exlings*" 2>/dev/null || true
+
+          if [ -d "_build/prod/rel/exlings/burrito_out" ]; then
+            echo "Found burrito_out directory"
+            cp -r _build/prod/rel/exlings/burrito_out/* $out/bin/ || true
+          elif [ -d "_build/prod/rel/exlings/bin" ]; then
+            echo "Found standard release bin directory"
+            cp -r _build/prod/rel/exlings/bin/* $out/bin/ || true
+          else
+            echo "No bin directory found, checking for other release outputs"
+            find _build/prod/rel -name "*" -type f -executable | head -5
+          fi
+
+          if [ -n "$(ls -A $out/bin 2>/dev/null)" ]; then
+            chmod +x $out/bin/* || true
+            echo "=== Installed binaries ==="
+            ls -la $out/bin/
+          else
+            echo "ERROR: No binaries were installed!"
+            exit 1
+          fi
+        '';
+
+        meta = with pkgs.lib; {
+          description = "Exlings, like rustlings but for Elixir";
+          homepage = "https://github.com/zoedsoupe/exlings";
+          license = licenses.mit;
+          maintainers = with maintainers; [zoedsoupe];
+          platforms = platforms.unix ++ platforms.darwin;
         };
-    };
+      };
+    });
+
+    apps = forAllSystems (pkgs: {
+      default = {
+        type = "app";
+        program = "${self.packages.${pkgs.system}.default}/bin/exlings";
+      };
+    });
   };
 }

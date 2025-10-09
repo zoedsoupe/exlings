@@ -32,3 +32,5 @@ result
 /burrito_out/
 
 /.lexical/
+/.expert/
+/.claude/
