@@ -34,3 +34,6 @@ result
 /.lexical/
 /.expert/
 /.claude/
+
+# Exlings progress file
+.progress
