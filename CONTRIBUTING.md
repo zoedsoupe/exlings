@@ -3,7 +3,6 @@
 By reading this document, you have already entered the Elite Hall
 of exlings Maintenance!
 
-
 ## The exlings Audience
 
 exlings is intended for programmers of all experience levels. No
@@ -20,14 +19,12 @@ Please file an issue!
 If an example doesn't match a description or if something is
 unclear, please file an issue!
 
-
 ## Spelling/Grammar
 
 If you see any typos, please file an issue...or make a pull
 request!
 
 No mistake is too small. The exlings must be perfect. :-)
-
 
 ## Ideas
 
@@ -40,7 +37,6 @@ fit for one reason or another.
 
 ## Platforms and Elixir Versions
 
-
 Because Elixir runs on the BEAM (Erlang VM), exlings should work
 wherever Elixir does (Linux, macOS, Windows, BSD, etc.).
 
@@ -52,23 +48,21 @@ If you run into an error in exlings caused by breaking changes
 in newer Elixir versions, that's a bug in exlings. Please file
 an issue...or make a pull request!
 
-
 ## Pull Request Workflow
 
 exlings uses the standard GitHub workflow:
 
-* Fork this repository
-* Create a branch from `main` for your work:
-      `git switch -b my-branch`
-* Make changes, commit them
-* When your changes are ready for review, push your branch:
-      `git push origin my-branch`
-* Create a pull request from your branch to `zoedsoupe/exlings:main`
-* Your faithful exlings maintainers will take a look at your
+- Fork this repository
+- Create a branch from `main` for your work:
+  `git switch -b my-branch`
+- Make changes, commit them
+- When your changes are ready for review, push your branch:
+  `git push origin my-branch`
+- Create a pull request from your branch to `zoedsoupe/exlings:main`
+- Your faithful exlings maintainers will take a look at your
   request as soon as possible
-* Once the changes are reviewed, your request will be merged and
+- Once the changes are reviewed, your request will be merged and
   eternal exlings contributor glory is yours!
-
 
 ## Testing Your Changes
 
@@ -78,7 +72,6 @@ Before submitting a pull request, make sure to test your changes:
 mix exlings <number-of-your-exercice>
 ```
 
-
 ## Licence
 
 If you submit your contribution to the repository/project,
@@ -86,7 +79,6 @@ you agree that your contribution will be licensed under
 the license of this repository/this project.
 Please note, it does not change your rights to use your own
 contribution for any other purpose.
-
 
 ## Exercise Structure
 
@@ -131,7 +123,6 @@ defmodule ExerciseXXXTest do
 end
 ```
 
-
 ## Adding New Exercises
 
 When adding a new exercise:
@@ -142,6 +133,5 @@ When adding a new exercise:
 4. Test that the exercise can be completed and verified
 5. Add a hint if the exercise is particularly challenging
 6. Update the README's "What's Covered" section if introducing a new topic
-
 
 Thank you for contributing to exlings and helping others learn Elixir!

@@ -28,6 +28,34 @@ Make sure you have Elixir installed on your system:
 | ------ | ----------- |
 | elixir | `>= 1.14.0` |
 
+#### Installing Elixir
+
+If you don't have Elixir installed yet, here are quick installation options:
+
+**macOS:**
+
+```sh
+brew install elixir
+```
+
+**Linux (Ubuntu/Debian):**
+
+```sh
+sudo apt-get install elixir
+```
+
+**Windows:**
+Download and run the installer from [elixir-lang.org](https://elixir-lang.org/install.html)
+
+**Using asdf (recommended for managing versions):**
+
+```sh
+asdf plugin add elixir
+asdf install elixir latest
+```
+
+For other installation methods, check the [official Elixir installation guide](https://elixir-lang.org/install.html).
+
 You can verify your Elixir installation:
 
 ```sh
@@ -96,6 +124,7 @@ Here are some excellent resources to complement your exlings journey:
 - [Elixir Official Getting Started Guide](https://hexdocs.pm/elixir/introduction.html) - The official introduction to Elixir
 - [Elixir Documentation](https://hexdocs.pm/elixir) - Complete Elixir standard library docs
 - [Elixir Language Reference](https://hexdocs.pm/elixir/syntax-reference.html) - Syntax and language features
+- [Elixir Changelog](https://hexdocs.pm/elixir/changelog.html) - Stay updated with language changes
 
 ## Interactive Learning
 
