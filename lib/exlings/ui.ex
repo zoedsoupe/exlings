@@ -102,6 +102,6 @@ defmodule Exlings.UI do
   defp green, do: IO.ANSI.green()
   defp cyan, do: IO.ANSI.cyan()
   # Elixir purple
-  defp purple, do: "\e[35m"
+  defp purple, do: IO.ANSI.magenta()
   defp reset, do: IO.ANSI.reset()
 end

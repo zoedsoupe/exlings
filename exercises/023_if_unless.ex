@@ -26,15 +26,25 @@
 # - Opposite of if
 # - Runs when condition is false
 # - Good for negative conditions
+# - Also has an optional else clause
 #
 # Syntax:
 #   unless condition do
 #     result_when_false
+#   else
+#     result_when_true
 #   end
 #
 # Example:
 #   unless user_logged_in? do
 #     redirect_to_login()
+#   end
+#
+# Example with else:
+#   unless user_logged_in? do
+#     "Please log in"
+#   else
+#     "Welcome!"
 #   end
 #
 # Truthiness in Elixir:

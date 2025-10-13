@@ -23,6 +23,7 @@ defmodule Mix.Tasks.Exlings.List do
 
     Exercises.all()
     |> Enum.group_by(& &1.topic)
+    |> Enum.sort_by(fn {topic, _} -> topic end)
     |> Enum.each(&print_exercises(&1, completed))
 
     percentage = div(completed * 100, total)

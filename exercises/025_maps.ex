@@ -35,8 +35,9 @@
 #
 # Your task:
 # Create a map representing a person with name and age fields
+# Use atom keys with the shorthand syntax
 
-person = ???  # Create a map with name: "Bob" and age: 25
+person = ???  # Create a map with atom keys: %{name: "Bob", age: 25}
 
 # Access the values
 name = person.name

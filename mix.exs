@@ -7,8 +7,7 @@ defmodule Exlings.MixProject do
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      aliases: aliases()
+      deps: deps()
     ]
   end
 
@@ -22,9 +21,5 @@ defmodule Exlings.MixProject do
     [
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
-  end
-
-  defp aliases do
-    []
   end
 end
