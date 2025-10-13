@@ -1,22 +1,21 @@
 defmodule Exlings.Exercises.Exercise do
-  @moduledoc false
+  @moduledoc "Struct representing an exercise"
 
-  alias Exlings.Exercises
-  alias __MODULE__
-
-  @opaque state :: :pending | :done
-  @opaque mode :: :compile | :test
-  @type t :: %Exercise{name: String.t(), path: Path.t(), mode: mode, hint: String.t()}
-
-  @fields ~w(name path mode hint)a
-  @enforce_keys @fields
-  defstruct @fields
-
-  @spec get_state(t) :: state
-  def get_state(%Exercise{} = e) do
-    case Exercises.run(e) do
-      {:stdout, _} -> :done
-      {:stderr, _} -> :pending
-    end
-  end
+  @enforce_keys [:number, :name, :file]
+  defstruct [
+    # 1, 2, 3...
+    :number,
+    # "Hello World"
+    :name,
+    # "001_hello_world.ex"
+    :file,
+    # Optional hint
+    :hint,
+    # "basics", "functions", etc.
+    :topic,
+    # For exercises that should print specific output
+    :expected_output,
+    # Skip broken exercises
+    skip: false
+  ]
 end

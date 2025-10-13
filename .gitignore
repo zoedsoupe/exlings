@@ -32,3 +32,8 @@ result
 /burrito_out/
 
 /.lexical/
+/.expert/
+/.claude/
+
+# Exlings progress file
+.progress
