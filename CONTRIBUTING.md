@@ -123,6 +123,136 @@ defmodule ExerciseXXXTest do
 end
 ```
 
+## Pedagogical Philosophy
+
+exlings follows a proven pedagogical approach inspired by rustlings and ziglings:
+
+- **Small, Broken Programs**: Each exercise is a small program with intentional gaps (marked with ???) that learners must fix
+- **Self-Contained Learning**: All information needed to solve an exercise is provided in the exercise's comments
+- **Progressive Difficulty**: Exercises build on previous concepts in a carefully planned sequence
+- **Learning by Doing**: Students learn through hands-on problem-solving, not passive reading
+- **Immediate Feedback**: The exercise runner provides clear, helpful error messages
+
+### Exercise Design Rules
+
+When creating exercises, follow these principles:
+
+1. **Single Focus**: Each exercise teaches ONE main concept clearly
+2. **Self-Contained**: Include all necessary information in comments
+3. **Clear Examples**: Provide 2-3 worked examples demonstrating the concept
+4. **??? Placeholders**: Use ??? to mark where students need to write code
+5. **Expected Output**: Show what the correct output should be in comments
+6. **Progressive Difficulty**: Build on concepts from previous exercises
+7. **No Emojis**: Keep formatting simple and professional
+8. **Idiomatic Code**: Demonstrate Elixir best practices
+
+### Topic Progression
+
+exlings follows a carefully structured progression from basics to advanced topics:
+
+#### Levels 1-6: Foundations (Exercises 001-027) - COMPLETED
+
+- **Level 1**: Basics (hello world, variables, IO)
+- **Level 2**: Data Types (numbers, atoms, booleans, strings, tuples)
+- **Level 3**: Functions (basic functions, anonymous functions, capture syntax, higher-order functions)
+- **Level 4**: Pattern Matching (basics, lists, multiple clauses, guards)
+- **Level 5**: Control Flow (if/unless, case, cond)
+- **Level 6**: Collections (maps, keyword lists, structs)
+
+**Key Learning Outcomes**: Students understand Elixir syntax, basic data types, functions, pattern matching, and simple data structures.
+
+#### Levels 7-12: Functional Programming (Exercises 028-055) - PLANNED
+
+- **Level 7**: Enum Module (map, filter, reduce, each, find, all/any, sort, group_by)
+  - 8 exercises covering the most important enumerable operations
+  - Foundation for functional programming style
+
+- **Level 8**: Recursion (basic, list patterns, accumulators, tail call optimization)
+  - 5 exercises teaching how Elixir works under the hood
+  - Essential for understanding functional programming
+
+- **Level 9**: Comprehensions (basic syntax, filters, multiple generators)
+  - 3 exercises on syntactic sugar for transforming enumerables
+  - More concise alternative to Enum operations
+
+- **Level 10**: Strings & Binaries (String module, interpolation, binaries, charlists)
+  - 4 exercises on text processing and binary data
+  - Understanding Elixir's string vs binary distinction
+
+- **Level 11**: Range & Stream (ranges, lazy evaluation, stream composition)
+  - 3 exercises on memory-efficient data processing
+  - Introduction to lazy evaluation
+
+- **Level 12**: Module Organization (nesting, import/alias, require, defp, attributes)
+  - 5 exercises on structuring larger programs
+  - Best practices for code organization
+
+**Key Learning Outcomes**: Students master functional programming patterns, understand recursion, work efficiently with collections, and organize code professionally.
+
+#### Levels 13-18: Practical Development (Exercises 056-077) - PLANNED
+
+- **Level 13**: IO & File System (IO operations, file read/write, streaming, Path module)
+  - 4 exercises on practical file and console operations
+  - Real-world data input/output
+
+- **Level 14**: Error Handling (error tuples, raise/rescue, catch/throw, with statement)
+  - 5 exercises on robust error handling patterns
+  - Elixir's philosophy of "let it crash" vs defensive programming
+
+- **Level 15**: Protocols (understanding, implementing, String.Chars example)
+  - 3 exercises on polymorphism in Elixir
+  - How to make custom types work with existing functions
+
+- **Level 16**: Behaviours (understanding, implementing, foundation for GenServer)
+  - 3 exercises on defining contracts between modules
+  - Preparation for OTP concepts (but no processes yet)
+
+- **Level 17**: Sigils (~r, ~s/~w, ~c, custom sigils)
+  - 3 exercises on Elixir's special syntax for literals
+  - Understanding when and how to use sigils
+
+- **Level 18**: Mix & Testing (project structure, ExUnit basics, assertions, documentation)
+  - 4 exercises on professional development workflow
+  - Testing best practices and documentation with @doc/@moduledoc
+
+**Key Learning Outcomes**: Students can build real applications, handle errors properly, use advanced language features, and follow professional development practices.
+
+#### Future Topics (Exercises 078+) - NOT YET PLANNED
+
+These advanced topics will be covered after all functional and language fundamentals are mastered:
+
+- **Processes**: spawn, send/receive, process linking, monitoring
+- **OTP Basics**: GenServer, Supervisors, Applications
+- **Advanced OTP**: Task, Agent, DynamicSupervisor
+- **Concurrency Patterns**: ETS, Registry, PubSub
+- **Metaprogramming**: Macros, quote/unquote, AST manipulation
+- **Advanced Protocols**: Enumerable, Collectable, Inspect
+- **NIFs and Ports**: Interfacing with native code
+- **Distribution**: Node connections, distributed Elixir
+
+**Rationale**: Concurrency and OTP are complex topics that require solid understanding of Elixir's functional foundation. Introducing them too early would overwhelm learners.
+
+### Proposing New Exercises
+
+Use the issue template at `.github/ISSUE_TEMPLATE/exercise.md` to propose new exercises. Each proposal should include:
+
+- **Topic and Level**: Where it fits in the progression
+- **Difficulty**: 1 (easy), 2 (medium), or 3 (hard)
+- **Prerequisites**: What students must know first
+- **Learning Objectives**: What students will learn (be specific)
+- **Key Concepts**: Main ideas covered
+- **Exercise Structure**: How you'll teach the concept
+- **Hints**: Guidance for solving the exercise
+- **References**: Links to official Elixir documentation
+
+New exercises should:
+
+- Fill gaps in the current progression
+- Build logically on previous exercises
+- Follow the same pedagogical style as existing exercises
+- Include clear, self-contained explanations
+- Provide helpful examples and expected output
+
 ## Adding New Exercises
 
 When adding a new exercise:
