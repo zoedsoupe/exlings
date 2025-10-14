@@ -1,6 +1,6 @@
 # exlings
 
-[![build and test](https://github.com/zoedsoupe/exlings/actions/workflows/test.yml/badge.svg)](https://github.com/zoedsoupe/exlings/actions/workflows/test.yml)
+[![ci](https://github.com/zoedsoupe/exlings/actions/workflows/ci.yml/badge.svg)](https://github.com/zoedsoupe/exlings/actions/workflows/ci.yml)
 
 Welcome to **exlings**! This project contains a series of small exercises designed to help you learn [Elixir](https://elixir-lang.org/) through practice. By fixing and completing these exercises, you'll learn how to read and write Elixir code.
 
