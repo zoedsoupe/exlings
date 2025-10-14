@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.1](https://github.com/zoedsoupe/exlings/compare/v0.2.0...v0.2.1) (2025-10-14)
+
+
+### Bug Fixes
+
+* duplicated exercises ([#6](https://github.com/zoedsoupe/exlings/issues/6)) ([3f74f9d](https://github.com/zoedsoupe/exlings/commit/3f74f9d8c5e5a147b5ba1e8ad29c2f5650900ccf))
+
+
+### Miscellaneous Chores
+
+* readme/formatting ([5bd1901](https://github.com/zoedsoupe/exlings/commit/5bd1901e8ddb1b34f8c068b53fecb74efa8dc035))
+
 ## [0.2.0](https://github.com/zoedsoupe/exlings/compare/v0.1.0...v0.2.0) (2025-10-13)
 
 ### Features
