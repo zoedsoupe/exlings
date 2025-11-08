@@ -69,6 +69,7 @@ Clone this repository with Git:
 ```sh
 git clone https://github.com/zoedsoupe/exlings
 cd exlings
+mix deps.get
 ```
 
 Now you're ready to start! Run the following to begin:
