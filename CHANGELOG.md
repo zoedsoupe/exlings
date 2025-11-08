@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.2](https://github.com/zoedsoupe/exlings/compare/v0.2.1...v0.2.2) (2025-11-08)
+
+
+### Documentation
+
+* add dependency installation step to README ([#58](https://github.com/zoedsoupe/exlings/issues/58)) ([f031f43](https://github.com/zoedsoupe/exlings/commit/f031f43541891701fdd9742737e628657e47eec4))
+
+
+### Miscellaneous Chores
+
+* add pedagogical framework and new issues ([17268c8](https://github.com/zoedsoupe/exlings/commit/17268c8a8a19d068397d8cbe1b928531e9b80874))
+* correctly adds ci badge on readme ([79896bc](https://github.com/zoedsoupe/exlings/commit/79896bc54237d05d40e4e22be254177fd12fdf97))
+
 ## [0.2.1](https://github.com/zoedsoupe/exlings/compare/v0.2.0...v0.2.1) (2025-10-14)
 
 ### Bug Fixes
