@@ -29,6 +29,10 @@ defmodule Exlings do
         UI.runtime_error(exercise, error)
         :failed
 
+      {:error, {:test_failed, error}} ->
+        UI.test_failed(exercise, error)
+        :failed
+
       {:error, {:wrong_output, expected, actual}} ->
         UI.wrong_output(exercise, expected, actual)
         :failed

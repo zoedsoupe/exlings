@@ -21,14 +21,25 @@ defmodule Exlings.Runner do
     end
   end
 
-  # string match on the exception name, good enough to split
+  # ponytail: string match on the exception name, good enough to split
   # compile errors from runtime errors
   defp classify(output) do
-    if output =~ ~r/\*\* \((CompileError|SyntaxError|TokenMissingError)\)/ do
-      {:compile_error, output}
-    else
-      {:runtime_error, output}
+    cond do
+      output =~ ~r/\*\* \((CompileError|SyntaxError|TokenMissingError)\)/ ->
+        {:compile_error, output}
+
+      output =~ ~r/fail/i ->
+        {:test_failed, output}
+
+      true ->
+        {:runtime_error, output}
     end
+  end
+
+  # ExUnit exits non-zero on test failures, so reaching validate/2 with
+  # kind :exunit means all tests passed. The report is the output.
+  defp validate(output, %Exercise{kind: :exunit}) do
+    {:ok, output}
   end
 
   defp validate(output, %Exercise{expected_output: nil}) do

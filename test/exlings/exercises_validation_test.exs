@@ -20,7 +20,7 @@ defmodule Exlings.ExercisesValidationTest do
     orphans =
       @exercises_dir
       |> File.ls!()
-      |> Enum.filter(&String.ends_with?(&1, ".ex"))
+      |> Enum.filter(&String.match?(&1, ~r/\.exs?$/))
       |> Enum.reject(&MapSet.member?(registered, &1))
 
     assert orphans == [], "unregistered exercise files: #{inspect(orphans)}"
@@ -40,5 +40,14 @@ defmodule Exlings.ExercisesValidationTest do
       |> Enum.map(&"#{&1.number}: #{&1.file}")
 
     assert mismatched == [], "filename/number mismatch: #{inspect(mismatched)}"
+  end
+
+  test "exunit exercises have no expected_output (exit status is the check)" do
+    invalid =
+      Exercises.all()
+      |> Enum.filter(&(&1.kind == :exunit and &1.expected_output != nil))
+      |> Enum.map(& &1.file)
+
+    assert invalid == [], "exunit exercises with expected_output: #{inspect(invalid)}"
   end
 end

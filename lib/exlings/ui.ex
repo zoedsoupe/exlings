@@ -56,6 +56,14 @@ defmodule Exlings.UI do
     show_help_message(ex)
   end
 
+  @doc "Show failing tests - print ExUnit report as-is"
+  def test_failed(%Exercise{} = ex, error) do
+    IO.puts("\n#{red()}Tests failed:#{reset()}\n")
+    IO.puts(error)
+    show_hint(ex)
+    show_help_message(ex)
+  end
+
   @doc "Show wrong output error"
   def wrong_output(%Exercise{} = ex, expected, actual) do
     IO.puts("""
