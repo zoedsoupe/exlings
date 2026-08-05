@@ -4,16 +4,38 @@ defmodule Mix.Tasks.Exlings do
   @shortdoc "Run Exlings exercises"
 
   @moduledoc """
-  Run Exlings exercises.
+  Welcome to exlings! A series of small exercises designed to help you
+  learn Elixir through practice, by fixing and completing them.
+
+  Inspired by the brilliant rustlings and ziglings projects.
 
   ## Usage
 
       mix exlings          # Continue from last completed exercise
       mix exlings 5        # Run specific exercise number
 
-  ## Options
+  ## Working with exercises
 
-  No options currently supported.
+  Exercises live in the `./exercises/` directory. Edit them as you want!
+
+      mix exlings          # Run the next pending exercise
+      mix exlings 1        # Run a specific exercise by number
+      mix exlings.list     # List all exercises and see your progress
+      mix exlings.reset    # Reset your progress and start from the beginning
+
+  ## Learning resources
+
+  Each exercise is self-contained and self-explained, but these complement
+  the journey:
+
+    * Elixir Getting Started Guide - https://hexdocs.pm/elixir/introduction.html
+    * Elixir Documentation - https://hexdocs.pm/elixir
+    * Elixir Language Reference - https://hexdocs.pm/elixir/syntax-reference.html
+    * Exercism Elixir Track - https://exercism.org/tracks/elixir
+    * Elixir School - https://elixirschool.com/en
+
+  The Elixir community (https://elixirforum.com) is incredibly friendly
+  and helpful!
   """
 
   alias Exlings.{Exercises, Progress, Runner, UI}
