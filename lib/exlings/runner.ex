@@ -1,13 +1,12 @@
 defmodule Exlings.Runner do
   @moduledoc """
-  Runs exercises - compiles and executes them.
-  Simple approach: just compile and run, no separate modes.
+  Runs exercises by executing them with `elixir`.
   """
 
   alias Exlings.Exercises.Exercise
 
   @doc """
-  Run an exercise: compile and execute it, validate output if expected.
+  Run an exercise: execute it and validate the output if expected.
   """
   def run(%Exercise{skip: true} = exercise) do
     {:skip, "Exercise #{exercise.number} is currently skipped"}
@@ -16,34 +15,24 @@ defmodule Exlings.Runner do
   def run(%Exercise{} = exercise) do
     path = exercise_path(exercise.file)
 
-    with {:ok, _} <- compile(path),
-         {:ok, output} <- execute(path) do
-      validate(output, exercise)
+    case System.cmd("elixir", [path], stderr_to_stdout: true) do
+      {output, 0} -> validate(output, exercise)
+      {output, _} -> {:error, classify(output)}
     end
   end
 
-  defp compile(path) do
-    case System.cmd("mix", ["run", "--no-start", path], stderr_to_stdout: true) do
-      {_, 0} ->
-        {:ok, :compiled}
-
-      {error, _} ->
-        {:error, {:compile_error, error}}
-    end
-  end
-
-  defp execute(path) do
-    case System.cmd("mix", ["run", "--no-start", path], stderr_to_stdout: true) do
-      {output, 0} ->
-        {:ok, output}
-
-      {output, _} ->
-        {:error, {:runtime_error, output}}
+  # string match on the exception name, good enough to split
+  # compile errors from runtime errors
+  defp classify(output) do
+    if output =~ ~r/\*\* \((CompileError|SyntaxError|TokenMissingError)\)/ do
+      {:compile_error, output}
+    else
+      {:runtime_error, output}
     end
   end
 
   defp validate(output, %Exercise{expected_output: nil}) do
-    # No expected output - just needs to compile and run
+    # No expected output - just needs to run successfully
     {:ok, output}
   end
 

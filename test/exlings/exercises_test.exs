@@ -26,7 +26,7 @@ defmodule Exlings.ExercisesTest do
 
   test "by_topic/1 filters exercises by topic" do
     basics = Exercises.by_topic("basics")
-    assert length(basics) >= 1
+    assert basics != []
     assert Enum.all?(basics, &(&1.topic == "basics"))
   end
 end

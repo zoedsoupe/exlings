@@ -88,9 +88,10 @@ defmodule Exlings.UI do
     """)
   end
 
-  defp show_hint(%Exercise{hint: nil}), do: :ok
+  @doc "Show the hint for an exercise, if it has one"
+  def show_hint(%Exercise{hint: nil}), do: :ok
 
-  defp show_hint(%Exercise{hint: hint}) do
+  def show_hint(%Exercise{hint: hint}) do
     IO.puts("\n#{cyan()}Hint:#{reset()} #{hint}")
   end
 
