@@ -2,7 +2,7 @@
   description = "Exlings, like rustlings but for Elixir";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
   };
 
@@ -27,7 +27,7 @@
       default = pkgs.mkShell {
         name = "exlings-dev";
         packages = let
-          elixir = with pkgs; (elixir-with-otp erlang_28)."1.18.4";
+          elixir = with pkgs; (elixir-with-otp erlang_28).latest;
         in
           with pkgs; [elixir erlang_28];
       };
