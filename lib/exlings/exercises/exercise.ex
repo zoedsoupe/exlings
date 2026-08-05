@@ -15,6 +15,8 @@ defmodule Exlings.Exercises.Exercise do
     :topic,
     # For exercises that should print specific output
     :expected_output,
+    # :script (validate stdout) or :exunit (validate test exit status)
+    kind: :script,
     # Skip broken exercises
     skip: false
   ]
