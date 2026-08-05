@@ -18,18 +18,26 @@ defmodule Exlings.ProgressTest do
     :ok
   end
 
-  test "read returns 0 when file doesn't exist" do
-    assert Progress.read() == 0
+  test "completed returns an empty set when file doesn't exist" do
+    assert Progress.completed() == MapSet.new()
   end
 
-  test "write and read progress" do
-    Progress.write(5)
-    assert Progress.read() == 5
+  test "complete marks a single exercise" do
+    Progress.complete(5)
+    assert Progress.completed?(5)
+    refute Progress.completed?(4)
+  end
+
+  test "complete accumulates multiple exercises without duplicates" do
+    Progress.complete(1)
+    Progress.complete(3)
+    Progress.complete(3)
+    assert Progress.completed() == MapSet.new([1, 3])
   end
 
   test "reset deletes progress file" do
-    Progress.write(10)
+    Progress.complete(10)
     assert Progress.reset() == :ok
-    assert Progress.read() == 0
+    assert Progress.completed() == MapSet.new()
   end
 end

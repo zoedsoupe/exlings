@@ -11,8 +11,8 @@ defmodule Mix.Tasks.Exlings do
 
   ## Usage
 
-      mix exlings          # Continue from last completed exercise
-      mix exlings 5        # Run specific exercise number
+      mix exlings          # Continue with the next pending exercise
+      mix exlings 5        # Run a specific exercise, then continue
 
   ## Working with exercises
 
@@ -20,6 +20,8 @@ defmodule Mix.Tasks.Exlings do
 
       mix exlings          # Run the next pending exercise
       mix exlings 1        # Run a specific exercise by number
+      mix exlings.watch    # Re-run the current exercise on every save
+      mix exlings.hint     # Show the hint for the current exercise
       mix exlings.list     # List all exercises and see your progress
       mix exlings.reset    # Reset your progress and start from the beginning
 
@@ -38,20 +40,17 @@ defmodule Mix.Tasks.Exlings do
   and helpful!
   """
 
-  alias Exlings.{Exercises, Progress, Runner, UI}
+  alias Exlings.{Exercises, UI}
 
   def run([]) do
     UI.show_header()
-    last = Progress.read()
-    next_exercise = Exercises.get(last + 1)
-    run_exercise(next_exercise)
+    continue_after(0)
   end
 
   def run([number_str]) do
     case Integer.parse(number_str) do
       {n, ""} ->
-        exercise = Exercises.get(n)
-        run_exercise(exercise)
+        run_specific(n)
 
       _ ->
         IO.puts("Error: Invalid exercise number: #{number_str}")
@@ -65,40 +64,31 @@ defmodule Mix.Tasks.Exlings do
     System.halt(1)
   end
 
-  defp run_exercise(nil) do
-    UI.all_complete()
-    System.halt(0)
+  defp run_specific(n) do
+    case Exercises.get(n) do
+      nil ->
+        IO.puts("Error: No exercise #{n}")
+        System.halt(1)
+
+      exercise ->
+        case Exlings.attempt(exercise) do
+          :failed -> System.halt(1)
+          _ -> continue_after(n)
+        end
+    end
   end
 
-  defp run_exercise(exercise) do
-    UI.exercise_header(exercise)
+  defp continue_after(number) do
+    case Exlings.next_exercise_after(number) do
+      nil ->
+        UI.all_complete()
+        System.halt(0)
 
-    case Runner.run(exercise) do
-      {:skip, reason} ->
-        UI.skip(exercise, reason)
-        # Continue to next
-        next = Exercises.get(exercise.number + 1)
-        run_exercise(next)
-
-      {:ok, output} ->
-        UI.success(exercise, output)
-        Progress.write(exercise.number)
-
-        # Continue to next exercise
-        next = Exercises.get(exercise.number + 1)
-        run_exercise(next)
-
-      {:error, {:compile_error, error}} ->
-        UI.compile_error(exercise, error)
-        System.halt(1)
-
-      {:error, {:runtime_error, error}} ->
-        UI.runtime_error(exercise, error)
-        System.halt(1)
-
-      {:error, {:wrong_output, expected, actual}} ->
-        UI.wrong_output(exercise, expected, actual)
-        System.halt(1)
+      exercise ->
+        case Exlings.attempt(exercise) do
+          :failed -> System.halt(1)
+          _ -> continue_after(exercise.number)
+        end
     end
   end
 end

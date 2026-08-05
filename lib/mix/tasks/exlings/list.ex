@@ -12,11 +12,10 @@ defmodule Mix.Tasks.Exlings.List do
 
   """
 
-  alias Exlings.Exercises
-  alias Exlings.Progress
+  alias Exlings.{Exercises, Progress}
 
   def run(_args) do
-    completed = Progress.read()
+    done = Progress.completed()
     total = Exercises.count()
 
     IO.puts("\nExlings Exercises:\n")
@@ -24,17 +23,18 @@ defmodule Mix.Tasks.Exlings.List do
     Exercises.all()
     |> Enum.group_by(& &1.topic)
     |> Enum.sort_by(fn {topic, _} -> topic end)
-    |> Enum.each(&print_exercises(&1, completed))
+    |> Enum.each(&print_exercises(&1, done))
 
-    percentage = div(completed * 100, total)
-    IO.puts("Progress: #{completed}/#{total} (#{percentage}%)\n")
+    completed_count = Enum.count(Exercises.all(), &(&1.number in done))
+    percentage = div(completed_count * 100, total)
+    IO.puts("Progress: #{completed_count}/#{total} (#{percentage}%)\n")
   end
 
-  defp print_exercises({topic, exercises}, completed) do
+  defp print_exercises({topic, exercises}, done) do
     IO.puts("#{String.upcase(topic)}:")
 
     Enum.each(exercises, fn ex ->
-      status = if ex.number <= completed, do: "[x]", else: "[ ]"
+      status = if ex.number in done, do: "[x]", else: "[ ]"
       IO.puts("  #{status} #{ex.number}. #{ex.name}")
     end)
 

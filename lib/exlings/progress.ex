@@ -1,41 +1,47 @@
 defmodule Exlings.Progress do
   @moduledoc """
-  Simple progress tracking - just stores last completed exercise number in `.progress` file.
+  Tracks completed exercises as a set of numbers, one per line, in `.progress`.
   """
 
   @default_progress_file ".progress"
 
   @doc """
-  Read the last completed exercise number.
-  Returns 0 if file doesn't exist (starting fresh).
+  Numbers of all completed exercises.
   """
-  def read do
+  def completed do
     case File.read(progress_file()) do
-      {:ok, content} ->
-        content
-        |> String.trim()
-        |> String.to_integer()
-
-      {:error, :enoent} ->
-        0
-
-      {:error, _} ->
-        0
+      {:ok, content} -> parse(content)
+      {:error, _} -> MapSet.new()
     end
-  rescue
-    _ -> 0
   end
 
-  @doc """
-  Write the exercise number as completed.
-  """
-  def write(exercise_number) when is_integer(exercise_number) do
-    File.write!(progress_file(), "#{exercise_number}\n")
+  defp parse(content) do
+    content
+    |> String.split("\n", trim: true)
+    |> Enum.flat_map(fn line ->
+      case Integer.parse(String.trim(line)) do
+        {n, ""} -> [n]
+        _ -> []
+      end
+    end)
+    |> MapSet.new()
   end
 
-  @doc """
-  Reset progress by deleting the file.
-  """
+  @doc "Check if an exercise is completed."
+  def completed?(number) when is_integer(number) do
+    number in completed()
+  end
+
+  @doc "Mark an exercise as completed."
+  def complete(number) when is_integer(number) do
+    if completed?(number) do
+      :ok
+    else
+      File.write!(progress_file(), "#{number}\n", [:append])
+    end
+  end
+
+  @doc "Reset progress by deleting the file."
   def reset do
     case File.rm(progress_file()) do
       :ok -> :ok
