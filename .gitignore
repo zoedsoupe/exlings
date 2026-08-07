@@ -37,3 +37,4 @@ result
 
 # Exlings progress file
 .progress
+erl_crash.dump

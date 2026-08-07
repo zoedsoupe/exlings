@@ -64,6 +64,18 @@ defmodule Exlings.UI do
     show_help_message(ex)
   end
 
+  @doc "Show timeout message"
+  def timeout(%Exercise{} = ex, millis) do
+    IO.puts("""
+
+    #{red()}Timed out after #{div(millis, 1000)}s.#{reset()}
+    Check for infinite loops or recursion.
+    """)
+
+    show_hint(ex)
+    show_help_message(ex)
+  end
+
   @doc "Show wrong output error"
   def wrong_output(%Exercise{} = ex, expected, actual) do
     IO.puts("""

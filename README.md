@@ -96,6 +96,23 @@ To run a specific exercise by number:
 mix exlings 1
 ```
 
+To re-run the current exercise automatically every time you save the file:
+
+```sh
+mix exlings.watch
+```
+
+Stop it with Ctrl+C.
+
+### Getting a Hint
+
+To show the hint for the next pending exercise (or a specific one):
+
+```sh
+mix exlings.hint
+mix exlings.hint 5
+```
+
 ### Checking Progress
 
 To list all exercises and see your progress:

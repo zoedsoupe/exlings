@@ -33,6 +33,10 @@ defmodule Exlings do
         UI.test_failed(exercise, error)
         :failed
 
+      {:error, {:timeout, millis}} ->
+        UI.timeout(exercise, millis)
+        :failed
+
       {:error, {:wrong_output, expected, actual}} ->
         UI.wrong_output(exercise, expected, actual)
         :failed

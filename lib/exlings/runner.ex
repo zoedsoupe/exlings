@@ -5,6 +5,9 @@ defmodule Exlings.Runner do
 
   alias Exlings.Exercises.Exercise
 
+  # Killing the task closes the port, which terminates the child elixir process
+  @default_timeout 10_000
+
   @doc """
   Run an exercise: execute it and validate the output if expected.
   """
@@ -14,10 +17,13 @@ defmodule Exlings.Runner do
 
   def run(%Exercise{} = exercise) do
     path = exercise_path(exercise.file)
+    timeout = Application.get_env(:exlings, :runner_timeout, @default_timeout)
+    task = Task.async(fn -> System.cmd("elixir", [path], stderr_to_stdout: true) end)
 
-    case System.cmd("elixir", [path], stderr_to_stdout: true) do
-      {output, 0} -> validate(output, exercise)
-      {output, _} -> {:error, classify(output)}
+    case Task.yield(task, timeout) || Task.shutdown(task, :brutal_kill) do
+      {:ok, {output, 0}} -> validate(output, exercise)
+      {:ok, {output, _}} -> {:error, classify(output)}
+      nil -> {:error, {:timeout, timeout}}
     end
   end
 
