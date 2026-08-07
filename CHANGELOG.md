@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.0](https://github.com/zoedsoupe/exlings/compare/v0.2.2...v0.3.0) (2026-08-07)
+
+
+### Features
+
+* add timeout on running ([2e08f51](https://github.com/zoedsoupe/exlings/commit/2e08f511c9dbe5c8b9ec4abd97b5f290610f9653))
+* add watch, and hint, simplify runner + progress ([408e939](https://github.com/zoedsoupe/exlings/commit/408e93963a20d8d1953d6d0b1e7abd4719e7825d))
+* support exunit/exs files output ([fbea4ab](https://github.com/zoedsoupe/exlings/commit/fbea4ab26375abf0c4ea33e1b0b13cb780ec9d4f))
+
+
+### Miscellaneous Chores
+
+* downgrade last elixir version on ci ([8be271b](https://github.com/zoedsoupe/exlings/commit/8be271b62312f08099c5b97553c61f970b09a482))
+* improve exlings mix task help ([a1345d6](https://github.com/zoedsoupe/exlings/commit/a1345d67d9b0fc0a5d2ff113d72d220c78c048d3))
+* issue template ([a233794](https://github.com/zoedsoupe/exlings/commit/a233794ea57f4a254278fc625ca38fbc14526e7c))
+* otp/elixir pair versions ([aecff7d](https://github.com/zoedsoupe/exlings/commit/aecff7daf3704be1f1fcde0105288315c8c4d6ab))
+
 ## [0.2.2](https://github.com/zoedsoupe/exlings/compare/v0.2.1...v0.2.2) (2025-11-08)
 
 
