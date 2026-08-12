@@ -474,6 +474,19 @@ defmodule Exlings.Exercises do
         "The body is do_count(tail, acc + 1). Compare its memory use with the non-tail version in the comments."
       ],
       expected_output: "Count: 1000\n"
+    },
+
+    # Level 9: Comprehensions (041-043)
+    %Exercise{
+      number: 41,
+      name: "Basic Comprehensions",
+      file: "041_basic_comprehensions.ex",
+      topic: "comprehensions",
+      hints: [
+        "Predict: what does for n <- [1, 2, 3], do: n * 10 return? Try it in IEx before editing the file.",
+        "The expression after do: runs once per element. Which expression squares n?"
+      ],
+      expected_output: "Squares: [1, 4, 9, 16, 25]\n"
     }
   ]
 
