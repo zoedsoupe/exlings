@@ -428,6 +428,17 @@ defmodule Exlings.Exercises do
         "Each call should move one step closer to the base case 0. Which expression is one less than n?"
       ],
       expected_output: "3\n2\n1\nBlast off!\n"
+    },
+    %Exercise{
+      number: 37,
+      name: "List Recursion",
+      file: "037_list_recursion.ex",
+      topic: "recursion",
+      hints: [
+        "Try [head | tail] = [1, 2, 3] in IEx. What is tail, and what is left after recursing on it a few times?",
+        "The sum of an empty list is 0. The recursive case adds head to the sum of tail."
+      ],
+      expected_output: "Sum: 15\n"
     }
   ]
 
