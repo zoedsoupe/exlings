@@ -450,6 +450,18 @@ defmodule Exlings.Exercises do
         "The base cases are the first two Fibonacci numbers: fib(0) is 0 and fib(1) is 1."
       ],
       expected_output: "fib(10) = 55\n"
+    },
+    %Exercise{
+      number: 39,
+      name: "Accumulator Pattern",
+      file: "039_accumulator_pattern.ex",
+      topic: "recursion",
+      hints: [
+        "Compare with exercise 037: there the sum was built while returning from the calls. Here acc carries the running total INTO the next call. What should the new acc be once head is seen?",
+        "The new accumulator combines the old acc with head using +. The recursive call keeps the shape do_sum(tail, new_acc).",
+        "The full call is do_sum(tail, acc + head). Why is returning acc the right move in the base case?"
+      ],
+      expected_output: "Sum: 15\n"
     }
   ]
 
