@@ -296,6 +296,14 @@ defmodule Exlings.Exercises do
       topic: "enum",
       hint: "Use fn a, b -> a >= b end (or the :desc shortcut)",
       expected_output: "Ascending: [1, 2, 3, 5, 8]\nDescending: [8, 5, 3, 2, 1]\n"
+    },
+    %Exercise{
+      number: 35,
+      name: "Enum.group_by",
+      file: "035_enum_group_by.ex",
+      topic: "enum",
+      hint: "Use fn n -> if rem(n, 2) == 0, do: :even, else: :odd end",
+      expected_output: "Even: [2, 4, 6]\nOdd: [1, 3, 5]\n"
     }
   ]
 
