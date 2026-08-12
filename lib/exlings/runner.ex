@@ -18,7 +18,16 @@ defmodule Exlings.Runner do
   def run(%Exercise{} = exercise) do
     path = exercise_path(exercise.file)
     timeout = Application.get_env(:exlings, :runner_timeout, @default_timeout)
-    task = Task.async(fn -> System.cmd("elixir", [path], stderr_to_stdout: true) end)
+
+    # Force ANSI so compiler diagnostics keep their colors when captured
+    task =
+      Task.async(fn ->
+        System.cmd(
+          "elixir",
+          ["-e", "Application.put_env(:elixir, :ansi_enabled, true)", "-r", path],
+          stderr_to_stdout: true
+        )
+      end)
 
     case Task.yield(task, timeout) || Task.shutdown(task, :brutal_kill) do
       {:ok, {output, 0}} -> validate(output, exercise)

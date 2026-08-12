@@ -43,6 +43,7 @@ defmodule Exlings.UI do
   @doc "Show compilation error - print compiler output as-is"
   def compile_error(%Exercise{} = ex, error) do
     IO.puts("\n#{red()}Compilation failed:#{reset()}\n")
+    show_placeholders(ex)
     IO.puts(error)
     show_hint(ex)
     show_help_message(ex)
@@ -133,6 +134,36 @@ defmodule Exlings.UI do
 
   defp show_help_message(%Exercise{} = ex) do
     IO.puts("\nEdit exercises/#{ex.file} and run 'mix exlings' again.\n")
+  end
+
+  # ??? SyntaxError output is cryptic for beginners. Listing the lines
+  # that still hold a placeholder maps the error back to the task.
+  # ponytail: strips text after # before matching, so instructions in
+  # comments don't count. A # inside a string literal would fool it.
+  defp show_placeholders(%Exercise{} = ex) do
+    with {:ok, content} <- File.read(Path.join("exercises", ex.file)) do
+      lines =
+        content
+        |> String.split("\n")
+        |> Enum.with_index(1)
+        |> Enum.filter(fn {line, _} ->
+          line |> String.split("#", parts: 2) |> hd() |> String.contains?("???")
+        end)
+        |> Enum.map(fn {_, n} -> n end)
+
+      case lines do
+        [] ->
+          :ok
+
+        [one] ->
+          IO.puts("You still have a ??? placeholder to fill at line #{one}.\n")
+
+        many ->
+          IO.puts("You still have ??? placeholders to fill at lines #{Enum.join(many, ", ")}.\n")
+      end
+    else
+      _ -> :ok
+    end
   end
 
   defp red, do: IO.ANSI.red()

@@ -45,6 +45,7 @@ defmodule Mix.Tasks.Exlings.Watch do
   end
 
   defp loop(exercise) do
+    IO.write(IO.ANSI.clear() <> IO.ANSI.home())
     IO.puts("Watching exercises/#{exercise.file} - edit and save to re-run. Ctrl+C to quit.")
 
     last = mtime(exercise)
