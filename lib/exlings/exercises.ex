@@ -264,6 +264,14 @@ defmodule Exlings.Exercises do
       hint:
         "Use fn n, acc -> n + acc end for the sum and fn n, acc -> n * acc end for the product",
       expected_output: "Sum: 15\nProduct: 120\n"
+    },
+    %Exercise{
+      number: 31,
+      name: "Enum.each",
+      file: "031_enum_each.ex",
+      topic: "enum",
+      hint: "Use fn color -> IO.puts(\"Color: \#{color}\") end",
+      expected_output: "Color: red\nColor: green\nColor: blue\n"
     }
   ]
 
