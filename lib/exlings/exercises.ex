@@ -272,6 +272,14 @@ defmodule Exlings.Exercises do
       topic: "enum",
       hint: "Use fn color -> IO.puts(\"Color: \#{color}\") end",
       expected_output: "Color: red\nColor: green\nColor: blue\n"
+    },
+    %Exercise{
+      number: 32,
+      name: "Enum.find",
+      file: "032_enum_find.ex",
+      topic: "enum",
+      hint: "Use fn n -> n > 10 end and fn n -> n > 100 end",
+      expected_output: "Found: 12\nMissing: nil\n"
     }
   ]
 
