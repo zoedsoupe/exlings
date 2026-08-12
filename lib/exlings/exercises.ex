@@ -487,6 +487,17 @@ defmodule Exlings.Exercises do
         "The expression after do: runs once per element. Which expression squares n?"
       ],
       expected_output: "Squares: [1, 4, 9, 16, 25]\n"
+    },
+    %Exercise{
+      number: 42,
+      name: "Comprehension Filters",
+      file: "042_comprehension_filters.ex",
+      topic: "comprehensions",
+      hints: [
+        "Read for n <- [1, 2, 3, 4], n > 2, do: n * 10 and predict the result. Which elements are skipped, and where does the condition sit?",
+        "The filter goes between the generator and do:. rem(n, 2) == 0 is true exactly for even numbers."
+      ],
+      expected_output: "Even squares: [4, 16, 36, 64]\n"
     }
   ]
 
