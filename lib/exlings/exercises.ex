@@ -255,6 +255,15 @@ defmodule Exlings.Exercises do
       topic: "enum",
       hint: "Use fn n -> rem(n, 2) == 0 end and fn w -> String.length(w) > 3 end",
       expected_output: "Evens: [2, 4, 6, 8]\nLong words: [\"elixir\", \"erlang\"]\n"
+    },
+    %Exercise{
+      number: 30,
+      name: "Enum.reduce",
+      file: "030_enum_reduce.ex",
+      topic: "enum",
+      hint:
+        "Use fn n, acc -> n + acc end for the sum and fn n, acc -> n * acc end for the product",
+      expected_output: "Sum: 15\nProduct: 120\n"
     }
   ]
 
