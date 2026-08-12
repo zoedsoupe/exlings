@@ -288,6 +288,14 @@ defmodule Exlings.Exercises do
       topic: "enum",
       hint: "Use fn n -> n > 0 end for all? and fn n -> n < 0 end for any?",
       expected_output: "All positive? true\nAny negative? false\n"
+    },
+    %Exercise{
+      number: 34,
+      name: "Enum.sort",
+      file: "034_enum_sort.ex",
+      topic: "enum",
+      hint: "Use fn a, b -> a >= b end (or the :desc shortcut)",
+      expected_output: "Ascending: [1, 2, 3, 5, 8]\nDescending: [8, 5, 3, 2, 1]\n"
     }
   ]
 
