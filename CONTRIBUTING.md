@@ -146,6 +146,42 @@ When creating exercises, follow these principles:
 7. **No Emojis**: Keep formatting simple and professional
 8. **Idiomatic Code**: Demonstrate Elixir best practices
 
+### Hints (PRIMM)
+
+exlings exercises follow the PRIMM model: Predict, Run, Investigate,
+Modify, Make. The exercise file itself covers Predict (read the concept
+and the broken code), Run (`mix exlings`) and Modify (fix the code).
+Hints cover Investigate and Make.
+
+Hints are progressive. Each exercise defines an ordered list of hints
+in `lib/exlings/exercises.ex`, least revealing first. Every failed
+attempt (or `mix exlings.hint`) reveals the next one.
+
+Rules for writing hints:
+
+1. **Never state the answer directly**, especially not in the first hint
+2. **First hint: Predict or Investigate.** Ask a question, or suggest a
+   small experiment in IEx that reveals the concept
+3. **Second hint: narrow the search space.** Name the function, operator
+   or pattern family without writing the exact code
+4. **Optional third hint** (harder exercises): near answer. May show the
+   shape of the solution, still leaving the final step to the learner
+5. Write each hint assuming the reader has already seen the previous ones
+6. End the Make stage in the exercise comments, not the hints: a small
+   extension idea ("try adding a field") belongs in the closing comments
+
+Good example (exercise 014, pin operator):
+
+```elixir
+hints: [
+  "Predict: after expected = :ok, what is the difference between {^expected, v} = {:ok, 100} and {expected, v} = {:ok, 100}? Try both in IEx.",
+  "Pin the variable: ^expected_status matches against its current value instead of rebinding it."
+]
+```
+
+Bad example: `"Use ^expected_status to match the pinned value"`. This
+hands over the answer and skips the learning.
+
 ### Topic Progression
 
 exlings follows a carefully structured progression from basics to advanced topics:
@@ -161,9 +197,9 @@ exlings follows a carefully structured progression from basics to advanced topic
 
 **Key Learning Outcomes**: Students understand Elixir syntax, basic data types, functions, pattern matching, and simple data structures.
 
-#### Levels 7-12: Functional Programming (Exercises 028-055) - PLANNED
+#### Levels 7-12: Functional Programming (Exercises 028-055) - IN PROGRESS
 
-- **Level 7**: Enum Module (map, filter, reduce, each, find, all/any, sort, group_by)
+- **Level 7**: Enum Module (map, filter, reduce, each, find, all/any, sort, group_by) - COMPLETED
   - 8 exercises covering the most important enumerable operations
   - Foundation for functional programming style
 
@@ -260,8 +296,9 @@ When adding a new exercise:
 1. Create the exercise file in `exercises/` following the naming convention
 2. Add the exercise to `lib/exlings/exercises.ex` in the appropriate order
 3. Ensure the exercise is properly formatted with `mix format`
-4. Test that the exercise can be completed and verified
-5. Add a hint if the exercise is particularly challenging
+4. Solve the exercise yourself and run it with `elixir` to confirm the
+   expected output before registering it
+5. Add 2-3 progressive hints following the PRIMM rules above
 6. Update the README's "What's Covered" section if introducing a new topic
 
 Thank you for contributing to exlings and helping others learn Elixir!

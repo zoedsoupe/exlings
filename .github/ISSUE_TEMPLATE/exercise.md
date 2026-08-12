@@ -41,7 +41,9 @@ Students will learn to:
 
 ### Hints
 
-[What students should focus on to solve the exercise]
+[2-3 progressive hints, least revealing first. Follow the PRIMM rules in
+CONTRIBUTING.md: first hint asks a question or suggests an IEx experiment,
+later hints narrow toward the answer. Never state the solution directly.]
 
 ### References
 

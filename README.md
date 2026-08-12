@@ -113,6 +113,11 @@ mix exlings.hint
 mix exlings.hint 5
 ```
 
+Hints are progressive: each exercise has several, from least to most
+revealing. Every failed attempt (or `mix exlings.hint`) reveals the next
+one, so the first hint nudges your thinking instead of giving the answer
+away.
+
 ### Checking Progress
 
 To list all exercises and see your progress:
@@ -132,6 +137,21 @@ mix exlings.reset
 ## What's Covered
 
 The primary goal for exlings is to cover the core Elixir language and essential concepts from OTP.
+
+Currently available (35 exercises):
+
+- **Basics**: printing, comments, variables
+- **Values**: math, strings, atoms, booleans, numbers
+- **Data structures**: tuples, lists, maps, keyword lists, structs
+- **Pattern matching**: basics, list patterns, underscore, pin operator, nesting
+- **Functions**: named, multiple clauses, guards, anonymous, capture syntax
+- **Control flow**: case, cond, if/unless, the pipe operator
+- **Enum**: map, filter, reduce, each, find, all?/any?, sort, group_by
+
+Planned next: recursion, comprehensions, strings and binaries, streams,
+modules, files, error handling, protocols, behaviours, sigils, Mix and
+ExUnit, then processes and OTP. See the full progression in
+[CONTRIBUTING.md](./CONTRIBUTING.md).
 
 # Learning Resources
 
