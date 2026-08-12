@@ -50,6 +50,27 @@ defmodule Exlings.Progress do
     end
   end
 
+  # Hint reveals are stored as "<number>h" lines in the same file.
+  # parse/1 only accepts plain integers, so these never count as done.
+
+  @doc "How many hints have been revealed for an exercise."
+  def hints_revealed(number) when is_integer(number) do
+    case File.read(progress_file()) do
+      {:ok, content} ->
+        content
+        |> String.split("\n", trim: true)
+        |> Enum.count(&(String.trim(&1) == "#{number}h"))
+
+      {:error, _} ->
+        0
+    end
+  end
+
+  @doc "Record that one more hint was revealed for an exercise."
+  def reveal_hint(number) when is_integer(number) do
+    File.write!(progress_file(), "#{number}h\n", [:append])
+  end
+
   defp progress_file do
     Application.get_env(:exlings, :progress_file, @default_progress_file)
   end

@@ -87,9 +87,10 @@ defmodule Exlings.UI do
 
     But got:
     #{actual}
-    #{show_hint(ex)}
-    #{show_help_message(ex)}
     """)
+
+    show_hint(ex)
+    show_help_message(ex)
   end
 
   @doc "Show skip message"
@@ -108,11 +109,26 @@ defmodule Exlings.UI do
     """)
   end
 
-  @doc "Show the hint for an exercise, if it has one"
-  def show_hint(%Exercise{hint: nil}), do: :ok
+  @doc """
+  Reveal the next hint for an exercise.
 
-  def show_hint(%Exercise{hint: hint}) do
-    IO.puts("\n#{cyan()}Hint:#{reset()} #{hint}")
+  Hints are listed least revealing first. Each failure (or explicit
+  'mix exlings.hint') reveals one more, so early hints ask questions
+  and later ones get closer to the answer.
+  """
+  def show_hint(%Exercise{hints: []}), do: :ok
+  def show_hint(%Exercise{hints: nil}), do: :ok
+
+  def show_hint(%Exercise{hints: hints} = ex) do
+    revealed = Exlings.Progress.hints_revealed(ex.number)
+    index = min(revealed, length(hints) - 1)
+
+    IO.puts("\n#{cyan()}Hint #{index + 1}/#{length(hints)}:#{reset()} #{Enum.at(hints, index)}")
+
+    if revealed < length(hints) - 1 do
+      Exlings.Progress.reveal_hint(ex.number)
+      IO.puts("#{cyan()}Stuck?#{reset()} Run 'mix exlings.hint' for another hint.")
+    end
   end
 
   defp show_help_message(%Exercise{} = ex) do

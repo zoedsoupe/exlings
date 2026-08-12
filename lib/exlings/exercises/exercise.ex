@@ -9,12 +9,13 @@ defmodule Exlings.Exercises.Exercise do
     :name,
     # "001_hello_world.ex"
     :file,
-    # Optional hint
-    :hint,
     # "basics", "functions", etc.
     :topic,
     # For exercises that should print specific output
     :expected_output,
+    # Progressive hints, least revealing first. Each failure (or
+    # 'mix exlings.hint') reveals the next one.
+    hints: [],
     # :script (validate stdout) or :exunit (validate test exit status)
     kind: :script,
     # Skip broken exercises
