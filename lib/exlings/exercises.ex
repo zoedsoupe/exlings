@@ -462,6 +462,18 @@ defmodule Exlings.Exercises do
         "The full call is do_sum(tail, acc + head). Why is returning acc the right move in the base case?"
       ],
       expected_output: "Sum: 15\n"
+    },
+    %Exercise{
+      number: 40,
+      name: "Tail Call Optimization",
+      file: "040_tail_call_optimization.ex",
+      topic: "recursion",
+      hints: [
+        "A call is in tail position when nothing happens after it returns. In 1 + count(tail), what is still waiting after the recursive call finishes?",
+        "do_count takes the tail and an accumulator that is one bigger. Write that call as the last expression of the clause.",
+        "The body is do_count(tail, acc + 1). Compare its memory use with the non-tail version in the comments."
+      ],
+      expected_output: "Count: 1000\n"
     }
   ]
 
