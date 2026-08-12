@@ -237,6 +237,16 @@ defmodule Exlings.Exercises do
       topic: "data_structures",
       hint: "Use defstruct x: 0, y: 0 and create %Point{x: 10, y: 20}",
       expected_output: "Point coordinates: x=10, y=20\n"
+    },
+
+    # Level 7: Enum Module (028-035)
+    %Exercise{
+      number: 28,
+      name: "Enum.map",
+      file: "028_enum_map.ex",
+      topic: "enum",
+      hint: "Use fn n -> n * 2 end and fn w -> String.upcase(w) end (or capture syntax)",
+      expected_output: "Doubled: [2, 4, 6, 8]\nShouted: [\"ELIXIR\", \"IS\", \"FUN\"]\n"
     }
   ]
 
