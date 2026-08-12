@@ -28,7 +28,7 @@
 #   # Returns a NEW struct with age changed
 #
 # Pattern matching with structs:
-#   %User{name: name, age: age} = user
+#   %User{name: name} = user
 #   # Extract fields
 #
 #   def greet(%User{name: name}), do: "Hello, #{name}!"
@@ -40,19 +40,38 @@
 # - Pattern matching: Can match on struct type
 # - Better for domain data modeling
 #
+# A note about scripts:
+# A struct can only be built with %Struct{} AFTER its module is compiled.
+# Elixir compiles a whole script file at once, so %Point{} can't be used
+# at the top level of the same file that defines Point. In real projects
+# each module lives in its own file, so this never comes up. Here we use
+# a constructor function, a common pattern, to create instances from
+# inside the module.
+#
+# Since a struct IS a map underneath, you can also match its fields
+# with a plain map pattern:
+#   %{x: x, y: y} = point
+#
 # Your task:
 # 1. Define a Point struct with x and y fields (default to 0)
-# 2. Create a point with x: 10, y: 20
-# 3. Use pattern matching to extract the coordinates
+# 2. Fill in the constructor to build a struct from x and y
+# 3. Create a point with x: 10, y: 20
+# 4. Use a map pattern to extract the coordinates
 
 defmodule Point do
   defstruct ???  # Define x and y fields with default value 0
+
+  # Constructor: builds a %Point{} from inside the module,
+  # where the struct is already defined
+  def new(x, y) do
+    ???
+  end
 end
 
-# Create a point
+# Create a point using the constructor
 point = ???
 
-# Extract coordinates using pattern matching
-%Point{???: x, ???: y} = point
+# Extract coordinates using a map pattern (structs are maps!)
+%{???: x, ???: y} = point
 
 IO.puts("Point coordinates: x=#{x}, y=#{y}")
