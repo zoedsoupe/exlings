@@ -247,6 +247,14 @@ defmodule Exlings.Exercises do
       topic: "enum",
       hint: "Use fn n -> n * 2 end and fn w -> String.upcase(w) end (or capture syntax)",
       expected_output: "Doubled: [2, 4, 6, 8]\nShouted: [\"ELIXIR\", \"IS\", \"FUN\"]\n"
+    },
+    %Exercise{
+      number: 29,
+      name: "Enum.filter",
+      file: "029_enum_filter.ex",
+      topic: "enum",
+      hint: "Use fn n -> rem(n, 2) == 0 end and fn w -> String.length(w) > 3 end",
+      expected_output: "Evens: [2, 4, 6, 8]\nLong words: [\"elixir\", \"erlang\"]\n"
     }
   ]
 
