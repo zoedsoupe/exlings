@@ -280,6 +280,14 @@ defmodule Exlings.Exercises do
       topic: "enum",
       hint: "Use fn n -> n > 10 end and fn n -> n > 100 end",
       expected_output: "Found: 12\nMissing: nil\n"
+    },
+    %Exercise{
+      number: 33,
+      name: "Enum.all? and Enum.any?",
+      file: "033_enum_all_any.ex",
+      topic: "enum",
+      hint: "Use fn n -> n > 0 end for all? and fn n -> n < 0 end for any?",
+      expected_output: "All positive? true\nAny negative? false\n"
     }
   ]
 
