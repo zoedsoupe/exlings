@@ -439,6 +439,17 @@ defmodule Exlings.Exercises do
         "The sum of an empty list is 0. The recursive case adds head to the sum of tail."
       ],
       expected_output: "Sum: 15\n"
+    },
+    %Exercise{
+      number: 38,
+      name: "Multiple Base Cases",
+      file: "038_multiple_base_cases.ex",
+      topic: "recursion",
+      hints: [
+        "Compute fib(2) by hand using fib(n) = fib(n - 1) + fib(n - 2). Which two values must already be known for that to work?",
+        "The base cases are the first two Fibonacci numbers: fib(0) is 0 and fib(1) is 1."
+      ],
+      expected_output: "fib(10) = 55\n"
     }
   ]
 
