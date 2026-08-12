@@ -415,6 +415,19 @@ defmodule Exlings.Exercises do
         "Use fn n -> if rem(n, 2) == 0, do: :even, else: :odd end."
       ],
       expected_output: "Even: [2, 4, 6]\nOdd: [1, 3, 5]\n"
+    },
+
+    # Level 8: Recursion (036-040)
+    %Exercise{
+      number: 36,
+      name: "Basic Recursion",
+      file: "036_basic_recursion.ex",
+      topic: "recursion",
+      hints: [
+        "Predict: what happens if countdown(n) calls countdown(n) with the same n forever? Why does the argument need to shrink on every call?",
+        "Each call should move one step closer to the base case 0. Which expression is one less than n?"
+      ],
+      expected_output: "3\n2\n1\nBlast off!\n"
     }
   ]
 
