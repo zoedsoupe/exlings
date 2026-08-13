@@ -498,6 +498,17 @@ defmodule Exlings.Exercises do
         "The filter goes between the generator and do:. rem(n, 2) == 0 is true exactly for even numbers."
       ],
       expected_output: "Even squares: [4, 16, 36, 64]\n"
+    },
+    %Exercise{
+      number: 43,
+      name: "Multiple Generators",
+      file: "043_multiple_generators.ex",
+      topic: "comprehensions",
+      hints: [
+        "Try for x <- [1, 2], y <- [:a, :b], do: {x, y} in IEx. How many pairs come out, and why that many?",
+        "The second generator looks like the first one: y <- ys. Each x is then paired with every y."
+      ],
+      expected_output: "Pairs: [{1, :a}, {1, :b}, {2, :a}, {2, :b}, {3, :a}, {3, :b}]\n"
     }
   ]
 
