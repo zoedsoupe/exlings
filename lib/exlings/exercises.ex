@@ -522,6 +522,17 @@ defmodule Exlings.Exercises do
         "The pipe feeds the trimmed string into the missing step. You want it loud before the split: String.upcase()."
       ],
       expected_output: "Words: [\"HELLO\", \"ELIXIR\", \"WORLD\"]\nCount: 3\n"
+    },
+    %Exercise{
+      number: 45,
+      name: "String Interpolation",
+      file: "045_string_interpolation.ex",
+      topic: "strings",
+      hints: [
+        "Try \"2 + 2 = \#{2 + 2}\" in IEx. What kinds of expressions are allowed inside \#{}?",
+        "Interpolate String.upcase(name) for the product and price * quantity for the total."
+      ],
+      expected_output: "Product: ELIXIR\nTotal: $59.97\nIn stock? yes\n"
     }
   ]
 
