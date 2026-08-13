@@ -568,6 +568,17 @@ defmodule Exlings.Exercises do
         "The range literal is 1..5. Enum functions accept it directly, no conversion needed."
       ],
       expected_output: "Range: 1..5\nSum: 15\nSquares: [1, 4, 9, 16, 25]\n"
+    },
+    %Exercise{
+      number: 49,
+      name: "Stream Introduction",
+      file: "049_stream_introduction.ex",
+      topic: "streams",
+      hints: [
+        "Compare Enum.map(1..10, fn n -> n * 2 end) with Stream.map(1..10, fn n -> n * 2 end) in IEx. What does each one return?",
+        "A stream does nothing until an Enum function consumes it. Enum.take(stream, 3) pulls just three values."
+      ],
+      expected_output: "First three: [2, 4, 6]\n"
     }
   ]
 

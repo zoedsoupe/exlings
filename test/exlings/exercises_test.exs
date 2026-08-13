@@ -6,7 +6,7 @@ defmodule Exlings.ExercisesTest do
   test "all/0 returns list of exercises" do
     exercises = Exercises.all()
     assert is_list(exercises)
-    assert length(exercises) == 48
+    assert length(exercises) == 49
   end
 
   test "get/1 returns exercise by number" do
@@ -21,7 +21,7 @@ defmodule Exlings.ExercisesTest do
   end
 
   test "count/0 returns total number of exercises" do
-    assert Exercises.count() == 48
+    assert Exercises.count() == 49
   end
 
   test "by_topic/1 filters exercises by topic" do
