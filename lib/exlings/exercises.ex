@@ -533,6 +533,17 @@ defmodule Exlings.Exercises do
         "Interpolate String.upcase(name) for the product and price * quantity for the total."
       ],
       expected_output: "Product: ELIXIR\nTotal: $59.97\nIn stock? yes\n"
+    },
+    %Exercise{
+      number: 46,
+      name: "Binaries and Bitstrings",
+      file: "046_binaries.ex",
+      topic: "strings",
+      hints: [
+        "Try <<104, 101, 108, 108, 111>> in IEx and compare it with \"hello\". What does that tell you about strings?",
+        "Match against greeting itself. The rest::binary segment collects every byte after the first two."
+      ],
+      expected_output: "First byte: 104\nSecond byte: 101\nRest: llo\n"
     }
   ]
 
