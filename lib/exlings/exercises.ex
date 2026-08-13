@@ -555,6 +555,19 @@ defmodule Exlings.Exercises do
         "to_string/1 turns a charlist into a string, to_charlist/1 turns a string back into a charlist."
       ],
       expected_output: "String: hello\nLength: 5\nIs list? true\n"
+    },
+
+    # Level 11: Ranges and Streams (048-050)
+    %Exercise{
+      number: 48,
+      name: "Ranges",
+      file: "048_ranges.ex",
+      topic: "ranges",
+      hints: [
+        "Try 1..5 in IEx, then Enum.to_list(1..5). Is a range the same thing as a list?",
+        "The range literal is 1..5. Enum functions accept it directly, no conversion needed."
+      ],
+      expected_output: "Range: 1..5\nSum: 15\nSquares: [1, 4, 9, 16, 25]\n"
     }
   ]
 
