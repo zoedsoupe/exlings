@@ -203,23 +203,23 @@ exlings follows a carefully structured progression from basics to advanced topic
   - 8 exercises covering the most important enumerable operations
   - Foundation for functional programming style
 
-- **Level 8**: Recursion (basic, list patterns, accumulators, tail call optimization)
+- **Level 8**: Recursion (basic, list patterns, multiple base cases, accumulators, tail call optimization) - COMPLETED
   - 5 exercises teaching how Elixir works under the hood
   - Essential for understanding functional programming
 
-- **Level 9**: Comprehensions (basic syntax, filters, multiple generators)
+- **Level 9**: Comprehensions (basic syntax, filters, multiple generators) - COMPLETED
   - 3 exercises on syntactic sugar for transforming enumerables
   - More concise alternative to Enum operations
 
-- **Level 10**: Strings & Binaries (String module, interpolation, binaries, charlists)
+- **Level 10**: Strings & Binaries (String module, interpolation, binaries, charlists) - COMPLETED
   - 4 exercises on text processing and binary data
   - Understanding Elixir's string vs binary distinction
 
-- **Level 11**: Range & Stream (ranges, lazy evaluation, stream composition)
+- **Level 11**: Range & Stream (ranges, lazy evaluation, stream composition) - COMPLETED
   - 3 exercises on memory-efficient data processing
   - Introduction to lazy evaluation
 
-- **Level 12**: Module Organization (nesting, import/alias, require, defp, attributes)
+- **Level 12**: Module Organization (nesting, import/alias, require, defp, attributes) - NEXT
   - 5 exercises on structuring larger programs
   - Best practices for code organization
 
