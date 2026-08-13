@@ -544,6 +544,17 @@ defmodule Exlings.Exercises do
         "Match against greeting itself. The rest::binary segment collects every byte after the first two."
       ],
       expected_output: "First byte: 104\nSecond byte: 101\nRest: llo\n"
+    },
+    %Exercise{
+      number: 47,
+      name: "Charlists vs Strings",
+      file: "047_charlists.ex",
+      topic: "strings",
+      hints: [
+        "Try is_list(~c\"hi\") and is_binary(\"hi\") in IEx. Which text form is secretly a list?",
+        "to_string/1 turns a charlist into a string, to_charlist/1 turns a string back into a charlist."
+      ],
+      expected_output: "String: hello\nLength: 5\nIs list? true\n"
     }
   ]
 
