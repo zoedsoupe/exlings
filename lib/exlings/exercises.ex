@@ -509,6 +509,19 @@ defmodule Exlings.Exercises do
         "The second generator looks like the first one: y <- ys. Each x is then paired with every y."
       ],
       expected_output: "Pairs: [{1, :a}, {1, :b}, {2, :a}, {2, :b}, {3, :a}, {3, :b}]\n"
+    },
+
+    # Level 10: Strings and Binaries (044-047)
+    %Exercise{
+      number: 44,
+      name: "String Module Functions",
+      file: "044_string_module.ex",
+      topic: "strings",
+      hints: [
+        "Try String.trim(\"  hi  \") and String.upcase(\"hi\") in IEx. What does each one return?",
+        "The pipe feeds the trimmed string into the missing step. You want it loud before the split: String.upcase()."
+      ],
+      expected_output: "Words: [\"HELLO\", \"ELIXIR\", \"WORLD\"]\nCount: 3\n"
     }
   ]
 
