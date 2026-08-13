@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.4.0](https://github.com/zoedsoupe/exlings/compare/v0.3.0...v0.4.0) (2026-08-13)
+
+
+### Features
+
+* add exercise 028 enum map ([5b783a2](https://github.com/zoedsoupe/exlings/commit/5b783a215cc43a869622276dd83a74c7c960f398))
+* add exercise 029 enum filter ([7879c48](https://github.com/zoedsoupe/exlings/commit/7879c48bef32a107385164bea12b8792989abd15))
+* add exercise 030 enum reduce ([c685e5f](https://github.com/zoedsoupe/exlings/commit/c685e5fcb03b3b2662b0fd4b55ae84cd710dbf3a))
+* add exercise 031 enum each ([59fb150](https://github.com/zoedsoupe/exlings/commit/59fb1508929f92b1cc3b157d06b9ee28b2787c54))
+* add exercise 032 enum find ([172c6b1](https://github.com/zoedsoupe/exlings/commit/172c6b19f1c3a2a87e5a13701d8fa631ada0c0ae))
+* add exercise 033 enum all and any ([090e4d9](https://github.com/zoedsoupe/exlings/commit/090e4d9f6434aa3d23fdfd170e3c48917e8cc6fb))
+* add exercise 034 enum sort ([e5da6cd](https://github.com/zoedsoupe/exlings/commit/e5da6cd84e1b7863971e6dbc391cfc9ca16e42e8))
+* add exercise 035 enum group by ([35d90de](https://github.com/zoedsoupe/exlings/commit/35d90de27451233fbaca32b8373dccc8c7f4a80d))
+* add exercise 036 basic recursion ([217b1e6](https://github.com/zoedsoupe/exlings/commit/217b1e6777938d9743d71127e8e70775c7c72283))
+* add exercise 037 list recursion ([4f0ac12](https://github.com/zoedsoupe/exlings/commit/4f0ac12df1376fe08fd4089c66f45a8abaff3fbc))
+* add exercise 038 multiple base cases ([e7f885f](https://github.com/zoedsoupe/exlings/commit/e7f885fb27499c1545fe214605bab8ae4580fa67))
+* add exercise 039 accumulator pattern ([1441a8b](https://github.com/zoedsoupe/exlings/commit/1441a8b2884bd83a426f62b6feb5e9c2c7547745))
+* add exercise 040 tail call optimization ([371314d](https://github.com/zoedsoupe/exlings/commit/371314d4a12b77b836a45a5468c9c523e3897ca1))
+* add exercise 041 basic comprehensions ([61981c3](https://github.com/zoedsoupe/exlings/commit/61981c3cf89d7ab8d1af56fcdbe5a42d6dba943c))
+* add exercise 042 comprehension filters ([89c1e9c](https://github.com/zoedsoupe/exlings/commit/89c1e9c5021400b104698105d330b8b7fe743f51))
+* add exercise 043 multiple generators ([48bec17](https://github.com/zoedsoupe/exlings/commit/48bec175d63bb6330ea8e5f981151b4769142595))
+* add exercise 044 string module functions ([6a6b2fb](https://github.com/zoedsoupe/exlings/commit/6a6b2fb1be66749381d1d7ec8835621ace75ea27))
+* add exercise 045 string interpolation ([0dedfbb](https://github.com/zoedsoupe/exlings/commit/0dedfbbc613b87b6cf50039d6beeaa47cfb7f46c))
+* add exercise 046 binaries and bitstrings ([c681912](https://github.com/zoedsoupe/exlings/commit/c681912a2a58eb984922bcf3245b4e986bfa967f))
+* add exercise 047 charlists vs strings ([6c329c4](https://github.com/zoedsoupe/exlings/commit/6c329c466699d98bb4d9e3f0e8362cb2f91c381c))
+* add exercise 048 ranges ([555822a](https://github.com/zoedsoupe/exlings/commit/555822a42be690ffc9cd457a90e7707fa848505a))
+* add exercise 049 stream introduction ([9835e74](https://github.com/zoedsoupe/exlings/commit/9835e743393bed3c294093066c0a57694ce7280b))
+* add exercise 050 stream composition ([80ab036](https://github.com/zoedsoupe/exlings/commit/80ab036cae710fa7fc20141391cf8697ff30429b))
+* clearer compile errors ([6b46649](https://github.com/zoedsoupe/exlings/commit/6b466490421da4028275dd826f86ecb05f598fc7))
+* progressive PRIMM hints ([3e92b1d](https://github.com/zoedsoupe/exlings/commit/3e92b1dc79cdfded513c0305be6fd94c7f04d4e6))
+
+
+### Bug Fixes
+
+* credo issues ([d361874](https://github.com/zoedsoupe/exlings/commit/d3618748adac1be037b83160f0fc4241fa707116))
+* rework 027 structs for whole-file script compilation ([233af62](https://github.com/zoedsoupe/exlings/commit/233af6292d665d62256c775b1dfb8480db44e555)), closes [#59](https://github.com/zoedsoupe/exlings/issues/59)
+
+
+### Documentation
+
+* mark levels 8-11 completed in progression ([493a313](https://github.com/zoedsoupe/exlings/commit/493a3133edfc1a9c78679ebe03d3db0e3b37b0a4))
+* PRIMM hint guidelines and updated README ([f590adc](https://github.com/zoedsoupe/exlings/commit/f590adc47e221eedd846b81bd444ad997ea0bc9e))
+
 ## [0.3.0](https://github.com/zoedsoupe/exlings/compare/v0.2.2...v0.3.0) (2026-08-07)
 
 
