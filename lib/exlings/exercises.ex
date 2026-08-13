@@ -579,6 +579,17 @@ defmodule Exlings.Exercises do
         "A stream does nothing until an Enum function consumes it. Enum.take(stream, 3) pulls just three values."
       ],
       expected_output: "First three: [2, 4, 6]\n"
+    },
+    %Exercise{
+      number: 50,
+      name: "Stream Composition",
+      file: "050_stream_composition.ex",
+      topic: "streams",
+      hints: [
+        "Predict: with Enum.map |> Enum.filter |> Enum.take(5), how many intermediate lists are built? What changes when the first two steps are Stream calls?",
+        "The predicate is the same even check from earlier exercises: rem(n, 2) == 0."
+      ],
+      expected_output: "First 5 even squares: [4, 16, 36, 64, 100]\n"
     }
   ]
 

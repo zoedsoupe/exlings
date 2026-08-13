@@ -138,7 +138,7 @@ mix exlings.reset
 
 The primary goal for exlings is to cover the core Elixir language and essential concepts from OTP.
 
-Currently available (47 exercises):
+Currently available (50 exercises):
 
 - **Basics**: printing, comments, variables
 - **Values**: math, strings, atoms, booleans, numbers
@@ -150,10 +150,10 @@ Currently available (47 exercises):
 - **Recursion**: basics, list recursion, multiple base cases, accumulators, tail calls
 - **Comprehensions**: generators, filters, multiple generators
 - **Strings**: String module functions, interpolation, binaries, charlists
+- **Ranges and streams**: ranges, lazy evaluation, stream composition
 
-Planned next: ranges, streams, modules, files,
-error handling, protocols, behaviours, sigils, Mix and ExUnit, then
-processes and OTP. See the full progression in
+Planned next: modules, files, error handling, protocols, behaviours,
+sigils, Mix and ExUnit, then processes and OTP. See the full progression in
 [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 # Learning Resources
