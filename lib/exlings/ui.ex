@@ -141,29 +141,36 @@ defmodule Exlings.UI do
   # ponytail: strips text after # before matching, so instructions in
   # comments don't count. A # inside a string literal would fool it.
   defp show_placeholders(%Exercise{} = ex) do
-    with {:ok, content} <- File.read(Path.join("exercises", ex.file)) do
-      lines =
-        content
-        |> String.split("\n")
-        |> Enum.with_index(1)
-        |> Enum.filter(fn {line, _} ->
-          line |> String.split("#", parts: 2) |> hd() |> String.contains?("???")
-        end)
-        |> Enum.map(fn {_, n} -> n end)
+    case File.read(Path.join("exercises", ex.file)) do
+      {:ok, content} ->
+        lines = fetch_placeholder_lines(content)
 
-      case lines do
-        [] ->
-          :ok
+        case lines do
+          [] ->
+            :ok
 
-        [one] ->
-          IO.puts("You still have a ??? placeholder to fill at line #{one}.\n")
+          [one] ->
+            IO.puts("You still have a ??? placeholder to fill at line #{one}.\n")
 
-        many ->
-          IO.puts("You still have ??? placeholders to fill at lines #{Enum.join(many, ", ")}.\n")
-      end
-    else
-      _ -> :ok
+          many ->
+            IO.puts(
+              "You still have ??? placeholders to fill at lines #{Enum.join(many, ", ")}.\n"
+            )
+        end
+
+      _ ->
+        :ok
     end
+  end
+
+  defp fetch_placeholder_lines(content) do
+    content
+    |> String.split("\n")
+    |> Enum.with_index(1)
+    |> Enum.filter(fn {line, _} ->
+      line |> String.split("#", parts: 2) |> hd() |> String.contains?("???")
+    end)
+    |> Enum.map(fn {_, n} -> n end)
   end
 
   defp red, do: IO.ANSI.red()
