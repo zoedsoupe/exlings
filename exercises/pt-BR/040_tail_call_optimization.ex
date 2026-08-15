@@ -18,13 +18,13 @@
 # otimização de chamada de cauda (TCO).
 #
 # Por que isso importa:
-# - Recursão sem tail call usa memória proporcional ao tamanho da lista
+# - Recursão sem chamada de cauda usa memória proporcional ao tamanho da lista
 # - Recursão de cauda usa memória CONSTANTE, mesmo para listas enormes
 # - Laços que rodam para sempre (como servidores) precisam ser recursivos de cauda
 #
 # Sua tarefa:
 # Escreva o corpo de do_count/2 para que a chamada recursiva esteja em
-# tail position: recurse sobre tail com um acumulador uma unidade maior
+# posição de cauda: recurse sobre o resto com um acumulador uma unidade maior
 
 defmodule ListCounter do
   def count(list), do: do_count(list, 0)

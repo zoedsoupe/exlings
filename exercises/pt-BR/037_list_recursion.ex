@@ -33,7 +33,7 @@ defmodule MyList do
   # Caso base: qual é a soma de uma lista vazia?
   def sum([]), do: ???
 
-  # Caso recursivo: head mais a soma do resto
+  # Caso recursivo: o começo mais a soma do resto
   def sum([head | tail]) do
     head + sum(???)
   end

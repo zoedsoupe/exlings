@@ -34,7 +34,7 @@ defmodule Accumulator do
   # Caso base: não sobrou nada, o acumulador É o resultado
   defp do_sum([], acc), do: acc
 
-  # Caso recursivo: incorpora head ao acumulador e continua
+  # Caso recursivo: incorpora o começo ao acumulador e continua
   defp do_sum([head | tail], acc) do
     do_sum(tail, ???)
   end

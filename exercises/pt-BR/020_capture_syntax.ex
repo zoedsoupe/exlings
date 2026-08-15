@@ -39,7 +39,7 @@
 # - Quando deixa o código menos legível
 #
 # Sua tarefa:
-# Use a sintaxe de capture para criar uma função que soma 10 a um número
+# Use a sintaxe de captura para criar uma função que soma 10 a um número
 
 add_ten = ???
 

@@ -27,8 +27,8 @@
 #   config[:host]        # "localhost"
 #   Keyword.get(config, :port)  # 4000
 #
-# Keyword lists vs Maps:
-# - Keyword lists: ordenadas, podem ter duplicatas, usadas para opções
+# Listas de palavras-chave vs Maps:
+# - Listas de palavras-chave: ordenadas, podem ter duplicatas, usadas para opções
 # - Maps: não ordenados, chaves únicas, usados para dados estruturados
 #
 # Casamento de padrão:
@@ -41,7 +41,7 @@
 #   end
 #
 # Sua tarefa:
-# Crie uma keyword list com a configuração do banco de dados
+# Crie uma lista de palavras-chave com a configuração do banco de dados
 
 db_config = ???  # Crie [host: "localhost", port: 5432, database: "myapp"]
 
