@@ -4,53 +4,47 @@ defmodule Exlings.UI do
   Clean and simple output
   """
 
+  alias Exlings.{Exercises, I18n}
   alias Exlings.Exercises.Exercise
 
   @doc "Show the header with Elixir purple"
   def show_header do
     IO.puts("""
 
-    #{purple()}Exlings - Learn Elixir by fixing broken code#{reset()}
+    #{purple()}#{t(:header)}#{reset()}
     """)
   end
 
   @doc "Show exercise header"
   def exercise_header(%Exercise{} = ex) do
-    total = Exlings.Exercises.count()
+    total = Exercises.count()
+    name = Exercises.name(ex, locale())
 
     IO.puts("""
 
-    Exercise #{ex.number}/#{total}: #{ex.name}
+    #{t(:exercise_header, number: ex.number, total: total, name: name)}
     """)
   end
 
   @doc "Show success message"
   def success(%Exercise{} = ex, output) do
     completed = ex.number
-    total = Exlings.Exercises.count()
+    total = Exercises.count()
     percentage = div(completed * 100, total)
 
-    IO.puts("\n#{green()}Exercise #{ex.number} complete!#{reset()}")
+    IO.puts("\n#{green()}#{t(:success, number: ex.number)}#{reset()}")
 
     if String.trim(output) != "" do
-      IO.puts("\nOutput:")
+      IO.puts("\n#{t(:output_label)}")
       IO.puts(output)
     end
 
-    IO.puts("\nProgress: [#{completed}/#{total}] #{percentage}%\n")
-
-    if next = Exlings.next_exercise_after(completed) do
-      IO.puts("\nNow go try next exercise! It's on exercises/#{next.file}!\n")
-    else
-      IO.puts(
-        "\nCongratulations!!! You've finished all available exercises! You're a Elixir necromancer!"
-      )
-    end
+    IO.puts("\n#{t(:progress, completed: completed, total: total, percentage: percentage)}\n")
   end
 
   @doc "Show compilation error - print compiler output as-is"
   def compile_error(%Exercise{} = ex, error) do
-    IO.puts("\n#{red()}Compilation failed:#{reset()}\n")
+    IO.puts("\n#{red()}#{t(:compilation_failed)}#{reset()}\n")
     show_placeholders(ex)
     IO.puts(error)
     show_hint(ex)
@@ -59,7 +53,7 @@ defmodule Exlings.UI do
 
   @doc "Show runtime error - print error as-is"
   def runtime_error(%Exercise{} = ex, error) do
-    IO.puts("\n#{red()}Runtime error:#{reset()}\n")
+    IO.puts("\n#{red()}#{t(:runtime_error)}#{reset()}\n")
     IO.puts(error)
     show_hint(ex)
     show_help_message(ex)
@@ -67,7 +61,7 @@ defmodule Exlings.UI do
 
   @doc "Show failing tests - print ExUnit report as-is"
   def test_failed(%Exercise{} = ex, error) do
-    IO.puts("\n#{red()}Tests failed:#{reset()}\n")
+    IO.puts("\n#{red()}#{t(:tests_failed)}#{reset()}\n")
     IO.puts(error)
     show_hint(ex)
     show_help_message(ex)
@@ -77,8 +71,7 @@ defmodule Exlings.UI do
   def timeout(%Exercise{} = ex, millis) do
     IO.puts("""
 
-    #{red()}Timed out after #{div(millis, 1000)}s.#{reset()}
-    Check for infinite loops or recursion.
+    #{red()}#{t(:timeout, seconds: div(millis, 1000))}#{reset()}
     """)
 
     show_hint(ex)
@@ -89,12 +82,12 @@ defmodule Exlings.UI do
   def wrong_output(%Exercise{} = ex, expected, actual) do
     IO.puts("""
 
-    #{red()}Output doesn't match!#{reset()}
+    #{red()}#{t(:output_mismatch)}#{reset()}
 
-    Expected:
+    #{t(:expected_label)}
     #{expected}
 
-    But got:
+    #{t(:got_label)}
     #{actual}
     """)
 
@@ -104,7 +97,8 @@ defmodule Exlings.UI do
 
   @doc "Show skip message"
   def skip(%Exercise{} = ex, reason) do
-    IO.puts("\nSkipping exercise #{ex.number}: #{ex.name}")
+    name = Exercises.name(ex, locale())
+    IO.puts("\n#{t(:skipping, number: ex.number, name: name)}")
     IO.puts(reason)
     IO.puts("")
   end
@@ -113,8 +107,7 @@ defmodule Exlings.UI do
   def all_complete do
     IO.puts("""
 
-    #{green()}Congratulations!#{reset()}
-    You've completed all Exlings exercises!
+    #{green()}#{t(:all_complete)}#{reset()}
     """)
   end
 
@@ -125,23 +118,28 @@ defmodule Exlings.UI do
   'mix exlings.hint') reveals one more, so early hints ask questions
   and later ones get closer to the answer.
   """
-  def show_hint(%Exercise{hints: []}), do: :ok
-  def show_hint(%Exercise{hints: nil}), do: :ok
+  def show_hint(%Exercise{} = ex) do
+    case Exercises.hints(ex, locale()) do
+      hints when hints in [[], nil] ->
+        :ok
 
-  def show_hint(%Exercise{hints: hints} = ex) do
-    revealed = Exlings.Progress.hints_revealed(ex.number)
-    index = min(revealed, length(hints) - 1)
+      hints ->
+        revealed = Exlings.Progress.hints_revealed(ex.number)
+        index = min(revealed, length(hints) - 1)
 
-    IO.puts("\n#{cyan()}Hint #{index + 1}/#{length(hints)}:#{reset()} #{Enum.at(hints, index)}")
+        IO.puts(
+          "\n#{cyan()}#{t(:hint_label, index: index + 1, total: length(hints))}#{reset()} #{Enum.at(hints, index)}"
+        )
 
-    if revealed < length(hints) - 1 do
-      Exlings.Progress.reveal_hint(ex.number)
-      IO.puts("#{cyan()}Stuck?#{reset()} Run 'mix exlings.hint' for another hint.")
+        if revealed < length(hints) - 1 do
+          Exlings.Progress.reveal_hint(ex.number)
+          IO.puts("#{cyan()}#{t(:stuck)}#{reset()}")
+        end
     end
   end
 
   defp show_help_message(%Exercise{} = ex) do
-    IO.puts("\nEdit exercises/#{ex.file} and run 'mix exlings' again.\n")
+    IO.puts("\n#{t(:edit_and_rerun, path: Exlings.exercise_path(ex))}\n")
   end
 
   # ??? SyntaxError output is cryptic for beginners. Listing the lines
@@ -149,7 +147,7 @@ defmodule Exlings.UI do
   # ponytail: strips text after # before matching, so instructions in
   # comments don't count. A # inside a string literal would fool it.
   defp show_placeholders(%Exercise{} = ex) do
-    case File.read(Path.join("exercises", ex.file)) do
+    case File.read(Exlings.exercise_path(ex)) do
       {:ok, content} ->
         lines = fetch_placeholder_lines(content)
 
@@ -158,12 +156,10 @@ defmodule Exlings.UI do
             :ok
 
           [one] ->
-            IO.puts("You still have a ??? placeholder to fill at line #{one}.\n")
+            IO.puts("#{t(:placeholder_one, line: one)}\n")
 
           many ->
-            IO.puts(
-              "You still have ??? placeholders to fill at lines #{Enum.join(many, ", ")}.\n"
-            )
+            IO.puts("#{t(:placeholder_many, lines: Enum.join(many, ", "))}\n")
         end
 
       _ ->
@@ -180,6 +176,10 @@ defmodule Exlings.UI do
     end)
     |> Enum.map(fn {_, n} -> n end)
   end
+
+  defp t(key, bindings \\ []), do: I18n.t(locale(), key, bindings)
+
+  defp locale, do: Exlings.locale()
 
   defp red, do: IO.ANSI.red()
   defp green, do: IO.ANSI.green()

@@ -50,4 +50,69 @@ defmodule Exlings.ExercisesValidationTest do
 
     assert invalid == [], "exunit exercises with expected_output: #{inspect(invalid)}"
   end
+
+  test "localized exercise dirs mirror the canonical files" do
+    canonical =
+      @exercises_dir
+      |> File.ls!()
+      |> Enum.filter(&String.match?(&1, ~r/\.exs?$/))
+      |> MapSet.new()
+
+    for locale <- locale_dirs() do
+      dir = Path.join(@exercises_dir, locale)
+
+      localized =
+        dir
+        |> File.ls!()
+        |> Enum.filter(&String.match?(&1, ~r/\.exs?$/))
+        |> MapSet.new()
+
+      assert localized == canonical,
+             "#{dir}: file set differs from canonical (#{inspect(MapSet.symmetric_difference(localized, canonical) |> MapSet.to_list())})"
+
+      for file <- canonical do
+        assert normalized_ast(Path.join(dir, file)) ==
+                 normalized_ast(Path.join(@exercises_dir, file)),
+               "#{Path.join(dir, file)}: code differs from canonical, only comments may change"
+      end
+    end
+  end
+
+  test "pt-BR translations reference registered exercises with full hint lists" do
+    for {number, entry} <- Exlings.Exercises.PtBr.entries() do
+      exercise = Exercises.get(number)
+      assert exercise, "pt-BR translation for unknown exercise #{number}"
+      assert is_binary(entry.name), "exercise #{number}: missing pt-BR name"
+
+      assert length(entry.hints) == length(exercise.hints),
+             "exercise #{number}: pt-BR has #{length(entry.hints)} hints, English has #{length(exercise.hints)}"
+    end
+  end
+
+  defp locale_dirs do
+    @exercises_dir
+    |> File.ls!()
+    |> Enum.filter(&File.dir?(Path.join(@exercises_dir, &1)))
+  end
+
+  # Comments and formatting may differ between locales; the AST (with
+  # line metadata stripped) must not. ??? placeholders are swapped for
+  # parseable tokens first: an operator where ??? sits between operands
+  # (10 ??? 5), an identifier everywhere else.
+  defp normalized_ast(path) do
+    {:ok, ast} =
+      path
+      |> File.read!()
+      |> String.replace(~r/ \?\?\? (?!(?:do|end)\s)(?=[0-9a-zA-Z_"'\[({%:~])/, " + ")
+      |> String.replace("???", "__placeholder__")
+      |> Code.string_to_quoted()
+
+    Macro.prewalk(ast, fn
+      # call nodes: {name_or_remote, meta, args}
+      {name, _meta, args} when is_list(args) -> {name, [], args}
+      # variables: {name, meta, context}
+      {name, _meta, context} when is_atom(name) and is_atom(context) -> {name, [], context}
+      node -> node
+    end)
+  end
 end

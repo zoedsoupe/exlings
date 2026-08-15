@@ -608,4 +608,31 @@ defmodule Exlings.Exercises do
   def by_topic(topic) do
     Enum.filter(@exercises, &(&1.topic == topic))
   end
+
+  # Translations live in per-locale modules (Exlings.Exercises.PtBr etc.)
+  # keyed by exercise number. English stays canonical in this module and
+  # is the fallback when a locale lacks an entry.
+
+  @translation_modules %{pt_br: Exlings.Exercises.PtBr}
+
+  @doc "Exercise name in the given locale, falling back to English."
+  def name(%Exercise{} = exercise, locale) do
+    translated(locale, exercise.number, :name) || exercise.name
+  end
+
+  @doc "Exercise hints in the given locale, falling back to English."
+  def hints(%Exercise{} = exercise, locale) do
+    translated(locale, exercise.number, :hints) || exercise.hints
+  end
+
+  defp translated(:en, _number, _field), do: nil
+
+  defp translated(locale, number, field) do
+    with %{^locale => mod} <- @translation_modules,
+         %{^number => entry} <- mod.entries() do
+      Map.get(entry, field)
+    else
+      _ -> nil
+    end
+  end
 end

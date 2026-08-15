@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Exlings.Watch do
   Stop with Ctrl+C.
   """
 
-  alias Exlings.{Exercises, UI}
+  alias Exlings.{Exercises, I18n, UI}
 
   # ponytail: mtime polling instead of a filesystem-events dep. 300ms is
   # plenty for a save-to-feedback loop.
@@ -35,7 +35,7 @@ defmodule Mix.Tasks.Exlings.Watch do
 
     case exercise do
       nil ->
-        IO.puts("Error: Invalid or completed exercise")
+        IO.puts(I18n.t(Exlings.locale(), :watch_invalid))
         System.halt(1)
 
       exercise ->
@@ -46,7 +46,8 @@ defmodule Mix.Tasks.Exlings.Watch do
 
   defp loop(exercise) do
     IO.write(IO.ANSI.clear() <> IO.ANSI.home())
-    IO.puts("Watching exercises/#{exercise.file} - edit and save to re-run. Ctrl+C to quit.")
+
+    IO.puts(I18n.t(Exlings.locale(), :watching, path: Exlings.exercise_path(exercise)))
 
     last = mtime(exercise)
     result = Exlings.attempt(exercise)
@@ -73,7 +74,7 @@ defmodule Mix.Tasks.Exlings.Watch do
   end
 
   defp mtime(exercise) do
-    case File.stat(Path.join("exercises", exercise.file)) do
+    case File.stat(Exlings.exercise_path(exercise)) do
       {:ok, %{mtime: mtime}} -> mtime
       {:error, _} -> nil
     end

@@ -13,15 +13,18 @@ defmodule Mix.Tasks.Exlings.Reset do
   This will delete the .progress file.
   """
 
-  alias Exlings.Progress
+  alias Exlings.{I18n, Progress}
 
   def run(_args) do
     case Progress.reset() do
       :ok ->
-        Mix.shell().info("\nProgress reset! Run 'mix exlings' to start from the beginning.\n")
+        Mix.shell().info("\n" <> I18n.t(Exlings.locale(), :reset_done) <> "\n")
 
       {:error, reason} ->
-        Mix.shell().error("\nError resetting progress: #{inspect(reason)}\n")
+        Mix.shell().error(
+          "\n" <> I18n.t(Exlings.locale(), :reset_error, reason: inspect(reason)) <> "\n"
+        )
+
         System.halt(1)
     end
   end

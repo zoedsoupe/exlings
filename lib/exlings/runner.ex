@@ -12,11 +12,11 @@ defmodule Exlings.Runner do
   Run an exercise: execute it and validate the output if expected.
   """
   def run(%Exercise{skip: true} = exercise) do
-    {:skip, "Exercise #{exercise.number} is currently skipped"}
+    {:skip, Exlings.I18n.t(Exlings.locale(), :skip_reason, number: exercise.number)}
   end
 
   def run(%Exercise{} = exercise) do
-    path = exercise_path(exercise.file)
+    path = Exlings.exercise_path(exercise)
     timeout = Application.get_env(:exlings, :runner_timeout, @default_timeout)
 
     # Force ANSI so compiler diagnostics keep their colors when captured
@@ -72,9 +72,5 @@ defmodule Exlings.Runner do
     else
       {:error, {:wrong_output, expected, actual}}
     end
-  end
-
-  defp exercise_path(file) do
-    Path.join("exercises", file)
   end
 end

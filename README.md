@@ -2,6 +2,8 @@
 
 [![ci](https://github.com/zoedsoupe/exlings/actions/workflows/ci.yml/badge.svg)](https://github.com/zoedsoupe/exlings/actions/workflows/ci.yml)
 
+*Leia em português: [README.pt-BR.md](./README.pt-BR.md)*
+
 Welcome to **exlings**! This project contains a series of small exercises designed to help you learn [Elixir](https://elixir-lang.org/) through practice. By fixing and completing these exercises, you'll learn how to read and write Elixir code.
 
 > Inspired by the brilliant [rustlings](https://github.com/rust-lang/rustlings) and [ziglings](https://github.com/ratfactor/ziglings) projects.

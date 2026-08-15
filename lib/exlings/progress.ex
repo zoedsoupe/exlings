@@ -41,13 +41,44 @@ defmodule Exlings.Progress do
     end
   end
 
-  @doc "Reset progress by deleting the file."
+  @doc "Reset progress by deleting the file. The language choice is kept."
   def reset do
+    lang = language()
+
     case File.rm(progress_file()) do
-      :ok -> :ok
+      :ok -> if(lang, do: set_language(lang), else: :ok)
       {:error, :enoent} -> :ok
       {:error, reason} -> {:error, reason}
     end
+  end
+
+  # The chosen language is stored as a "lang:<name>" line. parse/1 only
+  # accepts plain integers, so it never counts as done, and older versions
+  # of exlings simply ignore the line.
+
+  @doc "The language stored in the progress file, or nil if never chosen."
+  def language do
+    case File.read(progress_file()) do
+      {:ok, content} ->
+        content
+        |> String.split("\n", trim: true)
+        |> Enum.find_value(&parse_lang_line/1)
+
+      {:error, _} ->
+        nil
+    end
+  end
+
+  defp parse_lang_line(line) do
+    case String.trim(line) do
+      "lang:" <> lang -> lang
+      _ -> nil
+    end
+  end
+
+  @doc "Store the chosen language."
+  def set_language(lang) when is_binary(lang) do
+    File.write!(progress_file(), "lang:#{lang}\n", [:append])
   end
 
   # Hint reveals are stored as "<number>h" lines in the same file.

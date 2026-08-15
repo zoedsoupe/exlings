@@ -40,9 +40,10 @@ defmodule Mix.Tasks.Exlings do
   and helpful!
   """
 
-  alias Exlings.{Exercises, Progress, UI}
+  alias Exlings.{Exercises, I18n, Progress, UI}
 
   def run([]) do
+    ensure_language()
     UI.show_header()
 
     done = Progress.completed()
@@ -58,21 +59,43 @@ defmodule Mix.Tasks.Exlings do
   end
 
   def run([number_str]) do
+    ensure_language()
+
     case Integer.parse(number_str) do
       {n, ""} ->
         run_specific(n)
 
       _ ->
-        IO.puts("Error: Invalid exercise number: #{number_str}")
+        IO.puts(t(:invalid_number, input: number_str))
         System.halt(1)
     end
   end
 
   def run(_) do
-    IO.puts("Error: Too many arguments")
-    IO.puts("Usage: mix exlings [number]")
+    IO.puts(t(:too_many_args))
+    IO.puts(t(:usage_exlings))
     System.halt(1)
   end
+
+  # First run only: ask once, store as a "lang:" line in .progress.
+  # Non-interactive shells (CI) get :eof and keep the English default.
+  defp ensure_language do
+    if is_nil(Progress.language()) do
+      "\nChoose your language / Escolha seu idioma:\n  1. English\n  2. Português (Brasil)\n> "
+      |> IO.gets()
+      |> maybe_set_language()
+    end
+  end
+
+  defp maybe_set_language(:eof), do: :ok
+  defp maybe_set_language({:error, _}), do: :ok
+
+  defp maybe_set_language(choice) do
+    lang = if String.trim(choice) == "2", do: "pt-BR", else: "en"
+    Progress.set_language(lang)
+  end
+
+  defp t(key, bindings \\ []), do: I18n.t(Exlings.locale(), key, bindings)
 
   defp run_next(done_until) do
     if exercise = Exlings.next_exercise_after(done_until) do
@@ -81,7 +104,7 @@ defmodule Mix.Tasks.Exlings do
         _ -> System.halt(0)
       end
     else
-      IO.puts("Error: No exercise #{done_until}")
+      IO.puts(t(:no_exercise, number: done_until))
       System.halt(1)
     end
   end
@@ -93,7 +116,7 @@ defmodule Mix.Tasks.Exlings do
         _ -> System.halt(0)
       end
     else
-      IO.puts("Error: No exercise #{n}")
+      IO.puts(t(:no_exercise, number: n))
       System.halt(1)
     end
   end

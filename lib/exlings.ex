@@ -1,7 +1,8 @@
 defmodule Exlings do
   @moduledoc false
 
-  alias Exlings.{Exercises, Progress, Runner, UI}
+  alias Exlings.{Exercises, I18n, Progress, Runner, UI}
+  alias Exlings.Exercises.Exercise
 
   @doc """
   Run one exercise, print the result and record progress on success.
@@ -50,5 +51,31 @@ defmodule Exlings do
   def next_exercise_after(min \\ 0) do
     done = Progress.completed()
     Enum.find(Exercises.all(), &(&1.number > min and &1.number not in done))
+  end
+
+  @doc "The user's chosen locale. Defaults to English when never asked."
+  def locale do
+    case Progress.language() do
+      nil -> :en
+      lang -> I18n.parse_locale(lang)
+    end
+  end
+
+  @doc """
+  Path to the exercise file for the current locale.
+
+  Localized files live in exercises/<locale-dir>/. When the localized
+  file is missing (translation lags behind), falls back to the canonical
+  English file at exercises/.
+  """
+  def exercise_path(%Exercise{file: file}) do
+    case I18n.locale_dir(locale()) do
+      "" ->
+        Path.join("exercises", file)
+
+      dir ->
+        localized = Path.join(["exercises", dir, file])
+        if File.exists?(localized), do: localized, else: Path.join("exercises", file)
+    end
   end
 end

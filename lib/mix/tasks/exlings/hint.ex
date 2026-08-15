@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Exlings.Hint do
       mix exlings.hint 5    # Hint for exercise 5
   """
 
-  alias Exlings.{Exercises, UI}
+  alias Exlings.{Exercises, I18n, UI}
 
   def run([]) do
     case Exlings.next_exercise_after() do
@@ -27,13 +27,13 @@ defmodule Mix.Tasks.Exlings.Hint do
       UI.show_hint(exercise)
     else
       _ ->
-        IO.puts("Error: Invalid exercise number: #{number_str}")
+        IO.puts(I18n.t(Exlings.locale(), :invalid_number, input: number_str))
         System.halt(1)
     end
   end
 
   def run(_) do
-    IO.puts("Usage: mix exlings.hint [number]")
+    IO.puts(I18n.t(Exlings.locale(), :usage_hint))
     System.halt(1)
   end
 end

@@ -40,4 +40,22 @@ defmodule Exlings.ProgressTest do
     assert Progress.reset() == :ok
     assert Progress.completed() == MapSet.new()
   end
+
+  test "language is nil when never set" do
+    assert Progress.language() == nil
+  end
+
+  test "set_language stores the language without counting as progress" do
+    Progress.set_language("pt-BR")
+    assert Progress.language() == "pt-BR"
+    assert Progress.completed() == MapSet.new()
+  end
+
+  test "reset preserves the language choice" do
+    Progress.set_language("pt-BR")
+    Progress.complete(1)
+    assert Progress.reset() == :ok
+    assert Progress.completed() == MapSet.new()
+    assert Progress.language() == "pt-BR"
+  end
 end
