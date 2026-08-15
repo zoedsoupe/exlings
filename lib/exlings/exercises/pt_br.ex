@@ -361,6 +361,203 @@ defmodule Exlings.Exercises.PtBr do
         "Preveja: com Enum.map |> Enum.filter |> Enum.take(5), quantas listas intermediárias são criadas? O que muda quando os dois primeiros passos são chamadas do Stream?",
         "O predicado é a mesma checagem de par dos exercícios anteriores: rem(n, 2) == 0."
       ]
+    },
+    51 => %{
+      name: "Módulos Aninhados",
+      hints: [
+        "Preveja: se um módulo é definido como `defmodule Arcade.HighScores`, qual você acha que é o nome completo dele visto de fora? Defina os dois módulos no IEx e tente chamar uma função do módulo interno.",
+        "Um módulo aninhado é alcançado pelo nome completo com pontos: Outer.Inner.function(). O ??? na chamada é só o nome do módulo interno.",
+        "Na definição com pontos, escreva o nome do módulo interno depois de Arcade., o mesmo nome usado para chamar price/0 logo abaixo."
+      ]
+    },
+    52 => %{
+      name: "Alias",
+      hints: [
+        "Investigue: depois de `alias Fruit.Store.Inventory`, que nome o Elixir dá ao módulo? Tente chamar count/1 no IEx usando apenas parte do nome completo.",
+        "alias A.B.C disponibiliza o ÚLTIMO segmento como nome do módulo. Com `as: Inv`, o nome é exatamente o que você escolheu."
+      ]
+    },
+    53 => %{
+      name: "Import",
+      hints: [
+        "Preveja: o que acontece se você chamar upcase(\"beam\") sem importar nada? E depois de `import String, only: [upcase: 1]`? Tente as duas no IEx.",
+        "import String, only: [...] permite chamar as funções listadas sem o prefixo String. Os ??? são exatamente os nomes da lista only: acima."
+      ]
+    },
+    54 => %{
+      name: "Funções Privadas",
+      hints: [
+        "Investigue: defina um módulo pequeno no IEx com uma função defp e tente chamá-la de fora do módulo. Que erro você recebe?",
+        "Funções privadas usam uma palavra-chave bem parecida com def: é def com uma letra a mais. Dentro do módulo, chame helpers privados pelo nome puro, como item_count(prices).",
+        "item_count/1 deve retornar quantos elementos a lista tem: a mesma chamada length/1 usada em exercícios anteriores."
+      ]
+    },
+    55 => %{
+      name: "Atributos de Módulo",
+      hints: [
+        "Preveja: @title é definido no topo do módulo. Dentro de title/0, como você acha que se lê esse valor de volta? Veja como welcome/0 usa @title na string.",
+        "Um atributo de módulo é lido com @name em qualquer lugar do corpo do módulo, inclusive dentro de funções. title/0 deve retornar o atributo que guarda \"Star Runner\"."
+      ]
+    },
+    56 => %{
+      name: "O Módulo IO",
+      hints: [
+        "Preveja: se IO.write(\"a\") e IO.puts(\"b\") rodarem em sequência, o que exatamente aparece na tela, e onde o cursor termina? Tente as duas ordens no IEx.",
+        "Uma das duas funções de impressão do IO adiciona quebra de linha e a outra não. O primeiro placeholder precisa da que deixa a linha aberta para o IO.puts(\"OK\") terminar.",
+        "No segundo placeholder você quer a função do IO que imprime um valor na forma inspecionada, aceita a opção label: e retorna o valor sem alteração para o pipe continuar fluindo."
+      ]
+    },
+    57 => %{
+      name: "Lendo e Escrevendo Arquivos",
+      hints: [
+        "Investigue: no IEx, rode File.write(Path.join(System.tmp_dir!(), \"probe.txt\"), \"hi\") e observe o valor de retorno. Depois rode File.read no mesmo caminho. Que formatos têm os resultados de sucesso?",
+        "Os três placeholders são funções do módulo File: uma escreve conteúdo em um caminho, uma lê o arquivo inteiro em uma string, uma apaga um arquivo. Associe cada placeholder à sua função.",
+        "Os padrões ao redor dos placeholders revelam os formatos de retorno: `:ok = File.___(path, content)` para escrever, `{:ok, content} = File.___(path)` para ler e `:ok = File.___(path)` para remover."
+      ]
+    },
+    58 => %{
+      name: "Streams de Arquivos Linha a Linha",
+      hints: [
+        "Preveja: qual é a diferença entre o que File.read/1 retorna e o que File.stream!/1 retorna? Chame as duas em um arquivo no IEx e compare.",
+        "O primeiro placeholder abre o arquivo como uma stream preguiçosa de linhas (uma função do File cujo nome termina em `!`). O segundo é a função do Enum que soma todos os números de uma coleção.",
+        "Cada linha da stream ainda carrega o \"\\n\" final, por isso String.trim/1 roda antes de String.to_integer/1. Depois disso, o pipeline termina em um consumidor do Enum de uma palavra só que produz o total."
+      ]
+    },
+    59 => %{
+      name: "O Módulo Path",
+      hints: [
+        "Investigue: no IEx, tente Path.basename(\"data/reports/sales.csv\") e Path.extname(\"data/reports/sales.csv\"). Qual delas mantém o ponto, e qual descarta o diretório?",
+        "O primeiro placeholder recebe uma LISTA de partes e as junta com o separador correto. As outras duas desmontam a string resultante: uma retorna só o nome do arquivo, a outra só a extensão.",
+        "Path.join aceita argumentos separados ou uma única lista. Path.basename devolve \"sales.csv\"; a função que devolve \".csv\" (ponto incluído) é Path.extname."
+      ]
+    },
+    60 => %{
+      name: "Depuração com IO.inspect (e dbg)",
+      hints: [
+        "Preveja: IO.inspect/2 retorna alguma coisa. Se retornasse nil, o que aconteceria com o Enum.sum() neste pipeline? Veja no IEx o que IO.inspect([1, 2]) realmente retorna.",
+        "O placeholder é um único passo de pipe que imprime a lista com o prefixo \"doubled: \" e a deixa passar intacta. Ele vive no módulo IO e aceita a opção label:.",
+        "O passo que você precisa tem a forma `|> IO.inspect(label: \"doubled\")`. Repare que a saída esperada imprime a linha do inspect ANTES de \"Sum: 30\", porque o inspect dispara enquanto o pipeline executa."
+      ]
+    },
+    61 => %{
+      name: "Tuplas de Erro",
+      hints: [
+        "Preveja: rode Integer.parse(\"42\") e Integer.parse(\"abc\") no IEx. Que informação extra a tupla carrega além do valor em si?",
+        "Você pode casar com a entrada ruim diretamente no cabeçalho da função: uma cláusula como def divide(_, 0) só roda quando o divisor é zero.",
+        "A segunda cláusula calcula o resultado com div(a, b) e o embrulha: {:ok, div(a, b)}."
+      ]
+    },
+    62 => %{
+      name: "Raise e Rescue",
+      hints: [
+        "Rode raise ArgumentError, \"oops\" no IEx e observe o que é impresso. Que tipo de struct é uma exceção, e como você casaria apenas com esse tipo?",
+        "rescue filtra pelo tipo da exceção com e in ModuleName. Qual módulo Parser.parse_positive/1 levanta para entradas inválidas?",
+        "A cláusula é e in ArgumentError -> \"Rescued: \#{e.message}\"."
+      ]
+    },
+    63 => %{
+      name: "Try e After",
+      hints: [
+        "Preveja: no primeiro try, o bloco after roda antes ou depois de Result: 42 ser impresso? Percorra a ordem de avaliação mentalmente antes de rodar.",
+        "O valor do bloco after é ignorado, mas seus efeitos colaterais ainda acontecem. A peça que falta é apenas a mensagem de limpeza impressa ali.",
+        "Preencha o placeholder com a string \"Cleaning up\"."
+      ]
+    },
+    64 => %{
+      name: "Throw e Catch",
+      hints: [
+        "Preveja: o que a expressão try retorna se o laço terminar sem lançar nada? E o que ela retorna quando um throw acontece no meio do laço?",
+        "catch casa padrões com o valor lançado. Leia a cláusula de catch existente e lance algo exatamente com esse formato.",
+        "A cláusula espera {:found, n}, então lance essa tupla: throw({:found, n})."
+      ]
+    },
+    65 => %{
+      name: "A Expressão With",
+      hints: [
+        "Preveja: quando o lado esquerdo do <- não casa com o retorno do passo, para onde vai esse valor? Trace run.(\"abc\") passo a passo.",
+        "Cada passo retorna {:ok, value}; o último padrão deve ligar o número dobrado ao nome usado no bloco do. Para o else, veja qual átomo de erro Pipeline.positive/1 retorna.",
+        "Ligue com {:ok, doubled} <- e case {:error, :not_positive} na cláusula else."
+      ]
+    },
+    66 => %{
+      name: "Introdução a Protocolos",
+      hints: [
+        "Preveja: o que acontece no IEx se você interpolar uma lista diretamente, como \"\#{[1, 2]}\"? Tente, e depois tente inspect([1, 2]).",
+        "String.Chars alimenta to_string/1 e a interpolação; Inspect alimenta inspect/1. Inteiros têm o primeiro, listas e maps só têm o segundo.",
+        "Preencha to_string(number) para o <>, e inspect(list) / inspect(user) dentro das interpolações."
+      ]
+    },
+    67 => %{
+      name: "Implementando um Protocolo",
+      hints: [
+        "Preveja: antes de qualquer defimpl existir, que erro \"Price: \#{price}\" levanta no IEx, e qual protocolo a mensagem de erro nomeia?",
+        "O defimpl precisa do seu alvo depois de for:. Qual módulo define a struct que aparece no casamento de padrão de to_string/1?",
+        "Dentro do corpo, a interpolação já funciona em amount (inteiro) e currency (átomo): retorne \"\#{amount} \#{currency}\"."
+      ]
+    },
+    68 => %{
+      name: "O Protocolo Enumerable",
+      hints: [
+        "Investigue: no IEx, rode Enumerable.reduce([1, 2], {:cont, []}, fn x, acc -> {:cont, [x | acc]} end). O que volta, e o que isso diz sobre quem trata {:cont, ...} para listas?",
+        "count/1 deve retornar uma tupla etiquetada {:ok, n}; o número de músicas é apenas o length da lista interna. Para reduce/3, delegue: chame Enumerable.reduce na lista interna.",
+        "O corpo de reduce é uma linha: Enumerable.reduce(songs, acc, fun). A implementação de lista trata halt e suspend por você."
+      ]
+    },
+    69 => %{
+      name: "Behaviours",
+      hints: [
+        "Preveja: remova a linha @impl true de um módulo funcional (ou tente em qualquer projeto): o código ainda roda? O que o compilador diz em vez disso?",
+        "Um callback parece uma typespec sem corpo: @callback nome(args) :: tipo_de_retorno(). O módulo que adota nomeia o módulo do behaviour depois de @behaviour.",
+        "@callback area(struct()) :: float() em Shape, @behaviour Shape dentro de Square, @impl true acima de area/1, e o corpo é side * side."
+      ]
+    },
+    70 => %{
+      name: "Despachando Através de um Behaviour",
+      hints: [
+        "Investigue: no IEx, atribua module = String e chame module.upcase(\"hi\"). O que isso diz sobre o que é um nome de módulo e o que você pode fazer com ele?",
+        "broadcast/3 recebe provider como uma variável comum guardando um módulo. A sintaxe provider.deliver(recipient, message) funciona exatamente como Email.deliver/2.",
+        "Email retorna \"[email] to \#{recipient}: \#{message}\", Sms o mesmo com [sms], e o corpo de broadcast é provider.deliver(recipient, message)."
+      ]
+    },
+    71 => %{
+      name: "Funções Genéricas com Behaviours",
+      hints: [
+        "Preveja: Emitter.emit recebe um átomo de módulo como QueryEncoder na variável encoder. Quando o módulo compilar, o que QueryEncoder.encode([a: 1]) retorna? Tente chamá-la direto no IEx.",
+        "Quando uma variável guarda um nome de módulo, você pode chamar uma função nela com a sintaxe de ponto de sempre: variavel.funcao(args). O typespec do @callback descreve uma função de uma lista de tuplas para uma String.t().",
+        "emit/2 é uma linha só: encoder.encode(pairs)."
+      ]
+    },
+    72 => %{
+      name: "O Sigil de Regex",
+      hints: [
+        "Preveja: no IEx, rode Regex.run(~r/[0-9]+/, \"abc 123 def 456\"). Qual número volta, e por que esse em vez de 456?",
+        "O atalho para dígito é \\d e o quantificador + significa um ou mais. Grupos nomeados se escrevem (?<nome>padrao) e {n} repete uma classe exatamente n vezes.",
+        "O padrão da data tem a forma (?<year>D{4})-(?<month>D{2}) onde D é a classe de dígitos."
+      ]
+    },
+    73 => %{
+      name: "Sigils de String e de Palavras",
+      hints: [
+        "Preveja: o que IO.puts(~S(a\#{1 + 1}b)) imprime em comparação com IO.puts(~s(a\#{1 + 1}b))? Teste os dois no IEx antes de editar o exercício.",
+        "A primeira lacuna pede o sigil minúsculo (interpolação ligada), a segunda seu gêmeo maiúsculo. Na lista de palavras, o tipo dos elementos vem de uma única letra logo após o delimitador de fechamento.",
+        "Os modificadores são s (strings, o padrão), a (átomos) e c (charlists). Qual deles produz [:alpha, :beta, :gamma]?"
+      ]
+    },
+    74 => %{
+      name: "Sigils de Calendário",
+      hints: [
+        "Preveja: no IEx, avalie ~D[2026-08-15] == \"2026-08-15\". Por que dá false? Depois inspecione ~D[2026-08-15] e observe qual struct ele constrói.",
+        "O sigil de data é ~D com colchetes no formato AAAA-MM-DD; o sigil de hora é ~T com HH:MM:SS.",
+        "As duas respostas são literais de sigil únicos: o prazo usa ~D[...] com a data do comentário do cabeçalho, o alarme usa ~T[...]."
+      ]
+    },
+    75 => %{
+      name: "Introdução ao ExUnit",
+      hints: [
+        "Preveja: antes de mudar qualquer coisa, leia os três testes e diga em voz alta o que add(2, 3) e even?(4) precisam retornar para cada assert passar.",
+        "add/2 é uma expressão única com o operador +. Para even?/1, pense no resto da divisão por 2: rem(n, 2) é 0 exatamente quando n é par.",
+        "Faça even?/1 retornar o booleano rem(n, 2) == 0."
+      ]
     }
   }
 

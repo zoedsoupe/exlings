@@ -590,6 +590,321 @@ defmodule Exlings.Exercises do
         "The predicate is the same even check from earlier exercises: rem(n, 2) == 0."
       ],
       expected_output: "First 5 even squares: [4, 16, 36, 64, 100]\n"
+    },
+
+    # Level 12: Module Organization (051-055)
+    %Exercise{
+      number: 51,
+      name: "Nested Modules",
+      file: "051_nested_modules.ex",
+      topic: "modules",
+      hints: [
+        "Predict: if a module is defined as `defmodule Arcade.HighScores`, what do you think its full name is from the outside? Define both modules in IEx and try calling a function on the inner one.",
+        "A nested module is reached by its full dotted name: Outer.Inner.function(). The ??? in the call is just the inner module's name.",
+        "For the dotted definition, write the inner module's name after Arcade., the same name used to call price/0 below it."
+      ],
+      expected_output: "Arcade: Pixel Palace\nChampion: AAA\nToken price: 2\n"
+    },
+    %Exercise{
+      number: 52,
+      name: "Alias",
+      file: "052_alias.ex",
+      topic: "modules",
+      hints: [
+        "Investigate: after `alias Fruit.Store.Inventory`, what name does Elixir give the module? Try calling count/1 on it in IEx using only part of the full name.",
+        "alias A.B.C makes the LAST segment available as the module name. With `as: Inv`, the name is exactly the one you chose."
+      ],
+      expected_output: "Items: 3\nFirst: apple\n"
+    },
+    %Exercise{
+      number: 53,
+      name: "Import",
+      file: "053_import.ex",
+      topic: "modules",
+      hints: [
+        "Predict: what happens if you call upcase(\"beam\") without importing anything? And after `import String, only: [upcase: 1]`? Try both in IEx.",
+        "import String, only: [...] lets you call the listed functions without the String. prefix. The ??? are exactly the names from the only: list above."
+      ],
+      expected_output: "BEAM\n   42\n"
+    },
+    %Exercise{
+      number: 54,
+      name: "Private Functions",
+      file: "054_private_functions.ex",
+      topic: "modules",
+      hints: [
+        "Investigate: define a tiny module in IEx with a defp function and try calling that function from outside the module. What error do you get?",
+        "Private functions use a keyword very similar to def: it is def with one extra letter. Inside the module, call private helpers by bare name, like item_count(prices).",
+        "item_count/1 should return how many elements the list has: the same length/1 call used in earlier exercises."
+      ],
+      expected_output: "Total: $60 (3 items)\n"
+    },
+    %Exercise{
+      number: 55,
+      name: "Module Attributes",
+      file: "055_module_attributes.ex",
+      topic: "modules",
+      hints: [
+        "Predict: @title is set at the top of the module. Inside title/0, how do you think you read that value back? Look at how welcome/0 uses @title in its string.",
+        "A module attribute is read with @name anywhere in the module body, including inside functions. title/0 should return the attribute that holds \"Star Runner\"."
+      ],
+      expected_output: "Star Runner\n3\nWelcome to Star Runner! Lives: 3\n"
+    },
+
+    # Level 13: IO and File System (056-060)
+    %Exercise{
+      number: 56,
+      name: "The IO Module",
+      file: "056_io_module.ex",
+      topic: "io",
+      hints: [
+        "Predict: if IO.write(\"a\") and IO.puts(\"b\") run back to back, what exactly appears on screen, and where does the cursor end up? Try both orders in IEx.",
+        "One of the two IO printing functions adds a newline and the other does not. The first placeholder needs the one that leaves the line open for IO.puts(\"OK\") to finish.",
+        "For the second placeholder you want the IO function that prints a value in its inspected form, accepts a label: option, and returns the value unchanged so the pipe keeps flowing."
+      ],
+      expected_output: "Status: OK\ntotal: 6\n"
+    },
+    %Exercise{
+      number: 57,
+      name: "Reading and Writing Files",
+      file: "057_file_read_write.ex",
+      topic: "io",
+      hints: [
+        "Investigate: in IEx, run File.write(Path.join(System.tmp_dir!(), \"probe.txt\"), \"hi\") and look at the return value. Then run File.read on the same path. What shapes do success results have?",
+        "The three placeholders are all functions in the File module: one writes content to a path, one reads a whole file into a string, one deletes a file. Match each placeholder to its job.",
+        "The patterns around the placeholders tell you the return shapes: `:ok = File.___(path, content)` for writing, `{:ok, content} = File.___(path)` for reading, and `:ok = File.___(path)` for removing."
+      ],
+      expected_output: "Read back: Hello from a file!\nCleaned up!\n"
+    },
+    %Exercise{
+      number: 58,
+      name: "Streaming Files Line by Line",
+      file: "058_file_streaming.ex",
+      topic: "io",
+      hints: [
+        "Predict: what is the difference between what File.read/1 returns and what File.stream!/1 returns? Call both on a file in IEx and compare.",
+        "The first placeholder opens the file as a lazy stream of lines (a File function whose name ends in `!`). The second is the Enum function that adds all numbers of a collection together.",
+        "Each streamed line still carries its trailing \"\\n\", which is why String.trim/1 runs before String.to_integer/1. After that, the pipeline ends in a one-word Enum consumer that produces the total."
+      ],
+      expected_output: "Total: 60\n"
+    },
+    %Exercise{
+      number: 59,
+      name: "The Path Module",
+      file: "059_path_module.ex",
+      topic: "io",
+      hints: [
+        "Investigate: in IEx, try Path.basename(\"data/reports/sales.csv\") and Path.extname(\"data/reports/sales.csv\"). Which one keeps the dot, and which one drops the directory?",
+        "The first placeholder takes a LIST of parts and joins them with the correct separator. The other two dissect the resulting string: one returns only the file name, the other only the extension.",
+        "Path.join accepts either separate arguments or a single list. Path.basename gives you \"sales.csv\"; the function that gives you \".csv\" (dot included) is Path.extname."
+      ],
+      expected_output: "Path: data/reports/sales.csv\nFile: sales.csv\nExtension: .csv\n"
+    },
+    %Exercise{
+      number: 60,
+      name: "Debugging with IO.inspect (and dbg)",
+      file: "060_inspect_and_debug.ex",
+      topic: "io",
+      hints: [
+        "Predict: IO.inspect/2 returns something. If it returned nil, what would happen to Enum.sum() in this pipeline? Check in IEx what IO.inspect([1, 2]) actually returns.",
+        "The placeholder is a single pipe step that prints the list with the prefix \"doubled: \" and passes the list through untouched. It lives in the IO module and takes a label: option.",
+        "The step you need has the shape `|> IO.inspect(label: \"doubled\")`. Notice the expected output prints the inspect line BEFORE \"Sum: 30\", because the inspect fires while the pipeline runs."
+      ],
+      expected_output: "doubled: [2, 4, 6, 8, 10]\nSum: 30\n"
+    },
+
+    # Level 14: Error Handling (061-065)
+    %Exercise{
+      number: 61,
+      name: "Error Tuples",
+      file: "061_error_tuples.ex",
+      topic: "error_handling",
+      hints: [
+        "Predict: run Integer.parse(\"42\") and Integer.parse(\"abc\") in IEx. What extra piece of information does the tuple carry besides the value itself?",
+        "You can match the bad input directly in the function head: a clause like def divide(_, 0) runs only when the divisor is zero.",
+        "The second clause computes the result with div(a, b) and wraps it: {:ok, div(a, b)}."
+      ],
+      expected_output: "10 / 2 = 5\nError: division by zero\n"
+    },
+    %Exercise{
+      number: 62,
+      name: "Raise and Rescue",
+      file: "062_raise_rescue.ex",
+      topic: "error_handling",
+      hints: [
+        "Run raise ArgumentError, \"oops\" in IEx and look at what is printed. What kind of struct is an exception, and how would you match only that kind?",
+        "rescue filters by exception type with e in ModuleName. Which module does Parser.parse_positive/1 raise for bad input?",
+        "The clause is e in ArgumentError -> \"Rescued: \#{e.message}\"."
+      ],
+      expected_output: "Parsed: 42\nRescued: expected a positive number, got: -5\n"
+    },
+    %Exercise{
+      number: 63,
+      name: "Try and After",
+      file: "063_try_after.ex",
+      topic: "error_handling",
+      hints: [
+        "Predict: in the first try, does the after block run before or after Result: 42 is printed? Walk the evaluation order in your head before running.",
+        "The after block's value is ignored, but its side effects still happen. The missing piece is just the cleanup message printed there.",
+        "Fill the placeholder with the string \"Cleaning up\"."
+      ],
+      expected_output:
+        "Working...\nCleaning up\nResult: 42\nCleaning up again\nRescued: something broke\n"
+    },
+    %Exercise{
+      number: 64,
+      name: "Throw and Catch",
+      file: "064_throw_catch.ex",
+      topic: "error_handling",
+      hints: [
+        "Predict: what does the try expression return if the loop finishes without throwing anything? And what does it return when a throw happens mid-loop?",
+        "catch pattern-matches on the thrown value. Read the existing catch clause and throw something with exactly that shape.",
+        "The clause expects {:found, n}, so throw that tuple: throw({:found, n})."
+      ],
+      expected_output: "Search result: 7\n"
+    },
+    %Exercise{
+      number: 65,
+      name: "The With Statement",
+      file: "065_with_statement.ex",
+      topic: "error_handling",
+      hints: [
+        "Predict: when the left side of <- does not match the step's return value, where does that value go? Trace run.(\"abc\") step by step.",
+        "Every step returns {:ok, value}; the last pattern must bind the doubled number to the name used in the do block. For else, look at which error atom Pipeline.positive/1 returns.",
+        "Bind with {:ok, doubled} <- and match {:error, :not_positive} in the else clause."
+      ],
+      expected_output: "Result: 42\nError: not a number\nError: not positive\n"
+    },
+
+    # Level 15: Protocols (066-068)
+    %Exercise{
+      number: 66,
+      name: "Protocols Introduction",
+      file: "066_protocols_intro.ex",
+      topic: "protocols",
+      hints: [
+        "Predict: what happens in IEx if you interpolate a list directly, like \"\#{[1, 2]}\"? Try it, then try inspect([1, 2]) instead.",
+        "String.Chars powers to_string/1 and interpolation; Inspect powers inspect/1. Integers have the first, lists and maps only have the second.",
+        "Fill in to_string(number) for the <>, and inspect(list) / inspect(user) inside the interpolations."
+      ],
+      expected_output:
+        "Number as string: 42\nList: [1, 2, 3]\nUser: %{name: \"exlings\", level: 15}\n"
+    },
+    %Exercise{
+      number: 67,
+      name: "Implementing a Protocol",
+      file: "067_implementing_protocols.ex",
+      topic: "protocols",
+      hints: [
+        "Predict: before any defimpl exists, what error does \"Price: \#{price}\" raise in IEx, and which protocol does the error message name?",
+        "The defimpl needs its target after for:. Which module defines the struct being pattern-matched in to_string/1?",
+        "Inside the body, interpolation already works on amount (integer) and currency (atom): return \"\#{amount} \#{currency}\"."
+      ],
+      expected_output: "Price: 99 USD\nTotal: 99 USD\n"
+    },
+    %Exercise{
+      number: 68,
+      name: "The Enumerable Protocol",
+      file: "068_enumerable_protocol.ex",
+      topic: "protocols",
+      hints: [
+        "Investigate: in IEx, run Enumerable.reduce([1, 2], {:cont, []}, fn x, acc -> {:cont, [x | acc]} end). What comes back, and what does that tell you about who handles {:cont, ...} for lists?",
+        "count/1 must return a tagged tuple {:ok, n}; the number of songs is just the length of the inner list. For reduce/3, delegate: call Enumerable.reduce on the inner list.",
+        "reduce's body is one line: Enumerable.reduce(songs, acc, fun). The list implementation handles halt and suspend for you."
+      ],
+      expected_output: "Count: 3\nLoud: [\"SONG A\", \"SONG B\", \"SONG C\"]\nHas song B? true\n"
+    },
+
+    # Level 16: Behaviours (069-071)
+    %Exercise{
+      number: 69,
+      name: "Behaviours",
+      file: "069_behaviours.ex",
+      topic: "behaviours",
+      hints: [
+        "Predict: remove the @impl true line from a working module (or try it in any project): does the code still run? What does the compiler say instead?",
+        "A callback looks like a typespec without a body: @callback name(args) :: return_type(). The adopting module names the behaviour module after @behaviour.",
+        "@callback area(struct()) :: float() in Shape, @behaviour Shape inside Square, @impl true above area/1, and the body is side * side."
+      ],
+      expected_output: "Square area: 16.0\n"
+    },
+    %Exercise{
+      number: 70,
+      name: "Dispatching Through a Behaviour",
+      file: "070_behaviour_dispatch.ex",
+      topic: "behaviours",
+      hints: [
+        "Investigate: in IEx, assign module = String and call module.upcase(\"hi\"). What does that tell you about what a module name is, and what you can do with it?",
+        "broadcast/3 receives provider as a plain variable holding a module. The call syntax provider.deliver(recipient, message) works exactly like Email.deliver/2.",
+        "Email returns \"[email] to \#{recipient}: \#{message}\", Sms the same with [sms], and broadcast's body is provider.deliver(recipient, message)."
+      ],
+      expected_output:
+        "[email] to alice@example.com: build succeeded\n[sms] to alice@example.com: build succeeded\n"
+    },
+    %Exercise{
+      number: 71,
+      name: "Generic Functions with Behaviours",
+      file: "071_behaviour_generic.ex",
+      topic: "behaviours",
+      hints: [
+        "Predict: Emitter.emit receives a module atom like QueryEncoder in its encoder variable. Once the module compiles, what does QueryEncoder.encode([a: 1]) return? Try calling it directly in IEx.",
+        "When a variable holds a module name, you can call a function on it with the usual dot syntax: variable.function(args). The @callback typespec describes a function from a list of tuples to a String.t().",
+        "emit/2 is a single line: encoder.encode(pairs)."
+      ],
+      expected_output: "Query: name=ana&lang=elixir\nCSV:   ana,elixir\n"
+    },
+
+    # Level 17: Sigils (072-074)
+    %Exercise{
+      number: 72,
+      name: "The Regex Sigil",
+      file: "072_regex_sigil.ex",
+      topic: "sigils",
+      hints: [
+        "Predict: in IEx, run Regex.run(~r/[0-9]+/, \"abc 123 def 456\"). Which number comes back, and why that one instead of 456?",
+        "The digit shorthand is \\d and the + quantifier means one or more. Named groups are written (?<name>pattern) and {n} repeats a class exactly n times.",
+        "The date pattern has the shape (?<year>D{4})-(?<month>D{2}) where D is the digit class."
+      ],
+      expected_output: "Has digits: true\nOrder number: 42\nYear: 2026, Month: 08\n"
+    },
+    %Exercise{
+      number: 73,
+      name: "String and Word Sigils",
+      file: "073_string_word_sigils.ex",
+      topic: "sigils",
+      hints: [
+        "Predict: what does IO.puts(~S(a\#{1 + 1}b)) print compared to IO.puts(~s(a\#{1 + 1}b))? Try both in IEx before editing the exercise.",
+        "The first gap needs the lowercase sigil (interpolation on), the second its uppercase twin. For the word list, the element type comes from a single letter right after the closing delimiter.",
+        "The modifiers are s (strings, the default), a (atoms) and c (charlists). Which one produces [:alpha, :beta, :gamma]?"
+      ],
+      expected_output:
+        "learning exlings is \"fun\"\nlearning \#{tool} is \"fun\"\nAtoms: [:alpha, :beta, :gamma]\n"
+    },
+    %Exercise{
+      number: 74,
+      name: "Calendar Sigils",
+      file: "074_calendar_sigils.ex",
+      topic: "sigils",
+      hints: [
+        "Predict: in IEx, evaluate ~D[2026-08-15] == \"2026-08-15\". Why is it false? Then inspect ~D[2026-08-15] and note which struct it builds.",
+        "The date sigil is ~D with square brackets in YYYY-MM-DD format; the time sigil is ~T with HH:MM:SS.",
+        "Both answers are single sigil literals: the deadline uses ~D[...] with the date from the header comment, the alarm uses ~T[...]."
+      ],
+      expected_output: "Deadline: 2026-08-15\nCompare: :gt\nDays apart: 226\nAlarm at: 07:30:00\n"
+    },
+
+    # Level 18: Mix and Testing (075)
+    %Exercise{
+      number: 75,
+      name: "ExUnit Basics",
+      file: "075_exunit_basics.ex",
+      topic: "testing",
+      kind: :exunit,
+      hints: [
+        "Predict: before changing anything, read the three tests and say out loud what add(2, 3) and even?(4) must return for each assert to pass.",
+        "add/2 is a single expression with the + operator. For even?/1, think about the remainder of a division by 2: rem(n, 2) is 0 exactly when n is even.",
+        "Make even?/1 return the boolean rem(n, 2) == 0."
+      ]
     }
   ]
 
