@@ -79,7 +79,9 @@ defmodule Exlings.ExercisesValidationTest do
   end
 
   test "pt-BR translations reference registered exercises with full hint lists" do
-    for {number, entry} <- Exlings.Exercises.PtBr.entries() do
+    alias Exlings.Exercises
+
+    for {number, entry} <- Exercises.PtBr.entries() do
       exercise = Exercises.get(number)
       assert exercise, "pt-BR translation for unknown exercise #{number}"
       assert is_binary(entry.name), "exercise #{number}: missing pt-BR name"
