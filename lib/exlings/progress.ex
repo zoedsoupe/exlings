@@ -76,9 +76,20 @@ defmodule Exlings.Progress do
     end
   end
 
-  @doc "Store the chosen language."
+  @doc "Store the chosen language, replacing any previous choice."
   def set_language(lang) when is_binary(lang) do
-    File.write!(progress_file(), "lang:#{lang}\n", [:append])
+    lines =
+      case File.read(progress_file()) do
+        {:ok, content} ->
+          content
+          |> String.split("\n", trim: true)
+          |> Enum.reject(&(String.trim(&1) |> String.starts_with?("lang:")))
+
+        {:error, _} ->
+          []
+      end
+
+    File.write!(progress_file(), Enum.join(lines ++ ["lang:#{lang}"], "\n") <> "\n")
   end
 
   # Hint reveals are stored as "<number>h" lines in the same file.

@@ -23,6 +23,7 @@ defmodule Mix.Tasks.Exlings do
       mix exlings.watch    # Re-run the current exercise on every save
       mix exlings.hint     # Show the hint for the current exercise
       mix exlings.list     # List all exercises and see your progress
+      mix exlings.lang     # Change the language
       mix exlings.reset    # Reset your progress and start from the beginning
 
   ## Learning resources

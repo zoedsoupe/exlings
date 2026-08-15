@@ -51,6 +51,14 @@ defmodule Exlings.ProgressTest do
     assert Progress.completed() == MapSet.new()
   end
 
+  test "set_language replaces a previous choice" do
+    Progress.complete(1)
+    Progress.set_language("en")
+    Progress.set_language("pt-BR")
+    assert Progress.language() == "pt-BR"
+    assert Progress.completed?(1)
+  end
+
   test "reset preserves the language choice" do
     Progress.set_language("pt-BR")
     Progress.complete(1)
