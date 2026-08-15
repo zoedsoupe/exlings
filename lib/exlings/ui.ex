@@ -38,6 +38,14 @@ defmodule Exlings.UI do
     end
 
     IO.puts("\nProgress: [#{completed}/#{total}] #{percentage}%\n")
+
+    if next = Exlings.next_exercise_after(completed) do
+      IO.puts("\nNow go try next exercise! It's on exercises/#{next.file}!\n")
+    else
+      IO.puts(
+        "\nCongratulations!!! You've finished all available exercises! You're a Elixir necromancer!"
+      )
+    end
   end
 
   @doc "Show compilation error - print compiler output as-is"

@@ -40,11 +40,21 @@ defmodule Mix.Tasks.Exlings do
   and helpful!
   """
 
-  alias Exlings.{Exercises, UI}
+  alias Exlings.{Exercises, Progress, UI}
 
   def run([]) do
     UI.show_header()
-    continue_after(0)
+
+    done = Progress.completed()
+    count = Exercises.count()
+    how_much = MapSet.size(done)
+
+    if how_much == count do
+      UI.all_complete()
+      System.halt(0)
+    else
+      run_next(how_much)
+    end
   end
 
   def run([number_str]) do
@@ -64,31 +74,27 @@ defmodule Mix.Tasks.Exlings do
     System.halt(1)
   end
 
-  defp run_specific(n) do
-    case Exercises.get(n) do
-      nil ->
-        IO.puts("Error: No exercise #{n}")
-        System.halt(1)
-
-      exercise ->
-        case Exlings.attempt(exercise) do
-          :failed -> System.halt(1)
-          _ -> continue_after(n)
-        end
+  defp run_next(done_until) do
+    if exercise = Exlings.next_exercise_after(done_until) do
+      case Exlings.attempt(exercise) do
+        :failed -> System.halt(1)
+        _ -> System.halt(0)
+      end
+    else
+      IO.puts("Error: No exercise #{done_until}")
+      System.halt(1)
     end
   end
 
-  defp continue_after(number) do
-    case Exlings.next_exercise_after(number) do
-      nil ->
-        UI.all_complete()
-        System.halt(0)
-
-      exercise ->
-        case Exlings.attempt(exercise) do
-          :failed -> System.halt(1)
-          _ -> continue_after(exercise.number)
-        end
+  defp run_specific(n) do
+    if exercise = Exercises.get(n) do
+      case Exlings.attempt(exercise) do
+        :failed -> System.halt(1)
+        _ -> System.halt(0)
+      end
+    else
+      IO.puts("Error: No exercise #{n}")
+      System.halt(1)
     end
   end
 end
