@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.5.0](https://github.com/zoedsoupe/exlings/compare/v0.4.0...v0.5.0) (2026-08-15)
+
+
+### Features
+
+* add exercise 075 exunit basics ([4c7a5e4](https://github.com/zoedsoupe/exlings/commit/4c7a5e4da83ed883c6553a66b0016595572e5ab0))
+* add level 12 module organization exercises (051-055) ([0501b88](https://github.com/zoedsoupe/exlings/commit/0501b88abeaad7bfa823c77f324707ee84111def))
+* add level 13 io and file system exercises (056-060) ([dde91b3](https://github.com/zoedsoupe/exlings/commit/dde91b36427b7b0db45ff31481fde33857e35397))
+* add level 14 error handling exercises (061-065) ([c776636](https://github.com/zoedsoupe/exlings/commit/c7766369431ddefd37986fb5ef0c6eceb4282b94))
+* add level 15 protocol exercises (066-068) ([e7bba79](https://github.com/zoedsoupe/exlings/commit/e7bba795758f230802235f8e3672f58cc933ae49))
+* add level 16 behaviour exercises (069-071) ([50635f7](https://github.com/zoedsoupe/exlings/commit/50635f752667a99f0621d1e2d86c76624b3c4972))
+* add level 17 sigil exercises (072-074) ([e67b227](https://github.com/zoedsoupe/exlings/commit/e67b22780eca62f6da4bda5d8097de47100b287b))
+* add mix exlings.lang to switch language ([a1278a7](https://github.com/zoedsoupe/exlings/commit/a1278a726c6c71636c662191d289ee57f37e698b))
+* add pt-BR localization ([889e5b6](https://github.com/zoedsoupe/exlings/commit/889e5b649b0c8f6e103cc665798f3f6da8357f10))
+* mix exlings only runs the current exercise ([30fb078](https://github.com/zoedsoupe/exlings/commit/30fb078779ca27fbc89b9024e72ca030c4a242f4))
+* register exercises 051-075 with hints and pt-BR translations ([020a8c5](https://github.com/zoedsoupe/exlings/commit/020a8c5be4c4968b87a811ca212271badde536f4))
+
+
+### Miscellaneous Chores
+
+* fix credo ([b30fbcd](https://github.com/zoedsoupe/exlings/commit/b30fbcde71b3a13e21eea5f12ad88a00fa542783))
+* improve translation ([97a3dbc](https://github.com/zoedsoupe/exlings/commit/97a3dbca5f9055b2f7d6403ea348f702ac101900))
+
 ## [0.4.0](https://github.com/zoedsoupe/exlings/compare/v0.3.0...v0.4.0) (2026-08-13)
 
 
