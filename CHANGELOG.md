@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/zoedsoupe/exlings/compare/v0.5.0...v0.5.1) (2026-11-02)
+
+
+### Miscellaneous Chores
+
+* **nix:** migrate dev shell to beam-overlay ([fb2354e](https://github.com/zoedsoupe/exlings/commit/fb2354e09bb7fa4370da15e96e00aa8a2b8ac1dc))
+
 ## [0.5.0](https://github.com/zoedsoupe/exlings/compare/v0.4.0...v0.5.0) (2026-08-15)
 
 
